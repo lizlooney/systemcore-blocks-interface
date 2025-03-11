@@ -26,6 +26,12 @@ import { Block } from '../toolbox/items';
 import { CallPythonFunctionBlock, FunctionArg } from '../blocks/mrc_call_python_function';
 import * as commonStorage from '../storage/common_storage';
 
+
+const CLASS_NAME_PLACEHOLDER = '%class_name%';
+const FULL_CLASS_NAME_PLACEHOLDER = '%full_class_name%';
+const INSTANCE_LABEL_PLACEHOLDER = '%instance_label%';
+const INSTANCE_VARIABLE_NAME_PLACEHOLDER = '%instance_var_name%';
+
 // Extends the python generator to collect some information about functions and
 // variables that have been defined so they can be used in other modules.
 
@@ -123,53 +129,60 @@ export class ExtendedPythonGenerator extends PythonGenerator {
   }
 
   private produceExportedBlocks(workspace: Blockly.Workspace): Block[] {
-    // The exported blocks produced here have the extraState.importModule and fields.MODULE values
-    // set to the MODULE_NAME_PLACEHOLDER. This is so blocks modules can be renamed and copied
-    // without having to change the contents of the modules.
-    // The placeholders will be replaced with the actual module name before they are added to the
-    // toolbox.
+    // The exported blocks produced here have some values set to placeholders.
+    // This is so blocks modules can be renamed and copied without having to change the
+    // contents of the modules. The placeholders will be replaced with the actual module
+    // name before they are added to the toolbox. See function replacePlaceholders below.
 
     const exportedBlocks = [];
 
-    // All functions are exported.
-    // TODO(lizlooney): instead of looking at procedure blocks, this code needs
-    // to look at mrc_class_method_def blocks.
-    const allProcedures = Blockly.Procedures.allProcedures(workspace);
-    const procedureTuples = allProcedures[0].concat(allProcedures[1]);
-    for (const procedureTuple of procedureTuples) {
-      const functionName = procedureTuple[0];
-      const blockDefinition = Blockly.Procedures.getDefinition(functionName, workspace);
-      if (!blockDefinition || !blockDefinition.isEnabled()) {
-        continue;
+    // Look at mrc_class_method_def blocks and make corresponding mrc_call_python_function blocks.
+    workspace.getBlocksByType('mrc_class_method_def').forEach((classMethodDefBlock) => {
+      if (!classMethodDefBlock.mrcCanBeCalledOutsideClass ||
+          !classMethodDefBlock.isEnabled()) {
+        return;
       }
-      const actualFunctionName = super.getProcedureName(functionName);
-      const hasReturnValue = procedureTuple[2];
       const args: FunctionArg[] = [];
-      const parameterNames = procedureTuple[1];
-      parameterNames.forEach((parameterName) => {
+      args.push({
+        'name': INSTANCE_LABEL_PLACEHOLDER,
+        'type': FULL_CLASS_NAME_PLACEHOLDER,
+      });
+      classMethodDefBlock.mrcParameters.forEach((param) => {
         args.push({
-          'name': parameterName,
-          'type': '',
-        })
+          'name': param.name,
+          'type': param.type,
+        });
       });
       const callFunctionBlock: Block = {
         'kind': 'block',
         'type': 'mrc_call_python_function',
         'extraState': {
-          'functionKind': 'module',
-          'returnType': hasReturnValue ? '' : 'None',
+          'functionKind': 'instance',
+          'returnType': classMethodDefBlock.mrcPythonMethodName,
           'args': args,
-          'importModule': commonStorage.MODULE_NAME_PLACEHOLDER,
-          'actualFunctionName': actualFunctionName,
+          'importModule': '',
+          'actualFunctionName': classMethodDefBlock.mrcPythonMethodName,
           'exportedFunction': true,
         },
         'fields': {
-          'MODULE_OR_CLASS': commonStorage.MODULE_NAME_PLACEHOLDER,
-          'FUNC': functionName,
+          'MODULE_OR_CLASS': FULL_CLASS_NAME_PLACEHOLDER,
+          'FUNC': classMethodDefBlock.getFieldValue('NAME'),
         },
+        'inputs': {
+          'ARG0': {
+            'block': {
+              'type': 'variables_get',
+              'fields': {
+                'VAR': {
+                  'name': INSTANCE_VARIABLE_NAME_PLACEHOLDER,
+                }
+              }
+            }
+          }
+        }
       };
       exportedBlocks.push(callFunctionBlock);
-    }
+    });
 
     const allVariables = workspace.getAllVariables();
     for (const variableModel of allVariables) {
@@ -199,32 +212,60 @@ export class ExtendedPythonGenerator extends PythonGenerator {
           'kind': 'block',
           'type': 'mrc_get_python_variable',
           'extraState': {
-            'varKind': 'module',
-            'moduleOrClassName': commonStorage.MODULE_NAME_PLACEHOLDER,
-            'importModule': commonStorage.MODULE_NAME_PLACEHOLDER,
+            'varKind': 'instance',
+            'moduleOrClassName': FULL_CLASS_NAME_PLACEHOLDER,
+            'importModule': '',
             'actualVariableName': actualVariableName,
+            'selfLabel': INSTANCE_LABEL_PLACEHOLDER,
+            'selfType': FULL_CLASS_NAME_PLACEHOLDER,
             'exportedVariable': true,
           },
           'fields': {
-            'MODULE_OR_CLASS': commonStorage.MODULE_NAME_PLACEHOLDER,
+            'MODULE_OR_CLASS': FULL_CLASS_NAME_PLACEHOLDER,
             'VAR': variableName,
           },
+          'inputs': {
+            'SELF': {
+              'block': {
+                'type': 'variables_get',
+                'fields': {
+                  'VAR': {
+                    'name': INSTANCE_VARIABLE_NAME_PLACEHOLDER,
+                  }
+                }
+              }
+            }
+          }
         };
         exportedBlocks.push(getPythonModuleVariableBlock);
         const setPythonModuleVariableBlock = {
           'kind': 'block',
           'type': 'mrc_set_python_variable',
           'extraState': {
-            'varKind': 'module',
-            'moduleOrClassName': commonStorage.MODULE_NAME_PLACEHOLDER,
-            'importModule': commonStorage.MODULE_NAME_PLACEHOLDER,
+            'varKind': 'instance',
+            'moduleOrClassName': FULL_CLASS_NAME_PLACEHOLDER,
+            'importModule': '',
             'actualVariableName': actualVariableName,
+            'selfLabel': INSTANCE_LABEL_PLACEHOLDER,
+            'selfType': FULL_CLASS_NAME_PLACEHOLDER,
             'exportedVariable': true,
           },
           'fields': {
-            'MODULE_OR_CLASS': commonStorage.MODULE_NAME_PLACEHOLDER,
+            'MODULE_OR_CLASS': FULL_CLASS_NAME_PLACEHOLDER,
             'VAR': variableName,
           },
+          'inputs': {
+            'SELF': {
+              'block': {
+                'type': 'variables_get',
+                'fields': {
+                  'VAR': {
+                    'name': INSTANCE_VARIABLE_NAME_PLACEHOLDER,
+                  }
+                }
+              }
+            }
+          }
         };
         exportedBlocks.push(setPythonModuleVariableBlock);
       }
@@ -234,3 +275,75 @@ export class ExtendedPythonGenerator extends PythonGenerator {
 }
 
 export const extendedPythonGenerator = new ExtendedPythonGenerator();
+
+export function replacePlaceholders(modulePath: string, exportedBlocks: Block[]) {
+  const moduleName = commonStorage.getModuleName(modulePath);
+  const className = commonStorage.moduleNameToClassName(moduleName);
+  const fullClassName = moduleName + '.' + className;
+  const instanceLabel = className.charAt(0).toLowerCase() + className.slice(1);
+  const instanceVariableName = instanceLabel;
+
+  exportedBlocks.forEach((block) => {
+    if (block.type === 'mrc_call_python_function') {
+      if (block.extraState.args.length > 0 &&
+          block.extraState.args[0].name === INSTANCE_LABEL_PLACEHOLDER) {
+        block.extraState.args[0].name = instanceLabel;
+      }
+      if (block.extraState.args.length > 0 &&
+          block.extraState.args[0].type === FULL_CLASS_NAME_PLACEHOLDER) {
+        block.extraState.args[0].type = fullClassName;
+      }
+      if (block.fields.MODULE_OR_CLASS === FULL_CLASS_NAME_PLACEHOLDER) {
+        block.fields.MODULE_OR_CLASS = fullClassName;
+      }
+      if (block.inputs.ARG0.block.type === 'variables_get' &&
+          block.inputs.ARG0.block.fields.VAR.name === INSTANCE_VARIABLE_NAME_PLACEHOLDER) {
+        block.inputs.ARG0.block.fields.VAR.name = instanceVariableName;
+      }
+    } else if (block.type === 'mrc_get_python_variable') {
+      if (block.extraState.moduleOrClassName === FULL_CLASS_NAME_PLACEHOLDER) {
+        block.extraState.moduleOrClassName = fullClassName;
+      }
+      if (block.extraState.selfLabel === INSTANCE_LABEL_PLACEHOLDER) {
+        block.extraState.selfLabel = instanceLabel;
+      }
+      if (block.extraState.selfType === FULL_CLASS_NAME_PLACEHOLDER) {
+        block.extraState.selfType = fullClassName;
+      }
+      if (block.fields.MODULE_OR_CLASS === FULL_CLASS_NAME_PLACEHOLDER) {
+        block.fields.MODULE_OR_CLASS = fullClassName;
+      }
+      if (block.inputs.SELF.block.type === 'variables_get' &&
+          block.inputs.SELF.block.fields.VAR.name === INSTANCE_VARIABLE_NAME_PLACEHOLDER) {
+        block.inputs.SELF.block.fields.VAR.name = instanceVariableName;
+      }
+    } else if (block.type === 'mrc_set_python_variable') {
+       if (block.extraState.moduleOrClassName === FULL_CLASS_NAME_PLACEHOLDER) {
+        block.extraState.moduleOrClassName = fullClassName;
+      }
+      if (block.extraState.selfLabel === INSTANCE_LABEL_PLACEHOLDER) {
+        block.extraState.selfLabel = instanceLabel;
+      }
+      if (block.extraState.selfType === FULL_CLASS_NAME_PLACEHOLDER) {
+        block.extraState.selfType = fullClassName;
+      }
+      if (block.fields.MODULE_OR_CLASS === FULL_CLASS_NAME_PLACEHOLDER) {
+        block.fields.MODULE_OR_CLASS = fullClassName;
+      }
+      if (block.inputs.SELF.block.type === 'variables_get' &&
+          block.inputs.SELF.block.fields.VAR.name === INSTANCE_VARIABLE_NAME_PLACEHOLDER) {
+        block.inputs.SELF.block.fields.VAR.name = instanceVariableName;
+      }
+    }
+  });
+
+  // HeyLiz begin
+  const HeyLiz = JSON.stringify(exportedBlocks);
+  if (HeyLiz.indexOf(CLASS_NAME_PLACEHOLDER) !== -1 ||
+      HeyLiz.indexOf(FULL_CLASS_NAME_PLACEHOLDER) !== -1 ||
+      HeyLiz.indexOf(INSTANCE_LABEL_PLACEHOLDER) !== -1 ||
+      HeyLiz.indexOf(INSTANCE_VARIABLE_NAME_PLACEHOLDER) !== -1) {
+    throw new Error('HeyLiz - A placeholder didn\'t get replaced: ' + HeyLiz);
+  }
+  // HeyLiz end
+}

@@ -60,7 +60,7 @@ export class MethodsCategory {
       // Collect the method names for mrc_class_method_def blocks that are
       // already in the blockly workspace.
       const methodNamesAlreadyUsed: string[] = [];
-      workspace.getBlocksByType('mrc_class_method_def', false).forEach((block) => {
+      workspace.getBlocksByType('mrc_class_method_def').forEach((block) => {
         const classMethodDefBlock = block as ClassMethodDefBlock;
         if (!classMethodDefBlock.mrcCanChangeSignature) {
           methodNamesAlreadyUsed.push(classMethodDefBlock.getFieldValue('NAME'));
@@ -108,7 +108,7 @@ export class MethodsCategory {
     // For each mrc_class_method_def block in the blockly workspace, check if it
     // can be called from within the class, and if so, add a
     // mrc_call_python_function block.
-    workspace.getBlocksByType('mrc_class_method_def', false).forEach((block) => {
+    workspace.getBlocksByType('mrc_class_method_def').forEach((block) => {
       const classMethodDefBlock = block as ClassMethodDefBlock;
       if (classMethodDefBlock.mrcCanBeCalledWithinClass) {
         const callPythonFunctionBlock: toolboxItems.Block = {
