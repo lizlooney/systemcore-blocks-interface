@@ -192,7 +192,7 @@ export class Editor {
         return;
       }
       const exportedBlocks = commonStorage.extractExportedBlocks(
-         this.currentModule.projectName, this.projectContent);
+         this.projectPath, this.projectContent);
       this.setToolbox(getToolboxJSON(exportedBlocks, shownPythonToolboxCategories));
     }
   }

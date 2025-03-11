@@ -25,7 +25,7 @@ import { Order } from 'blockly/python';
 
 import * as pythonUtils from './utils/generated/python';
 import { createFieldNonEditableText } from '../fields/FieldNonEditableText';
-import { getAllowedTypesForSetCheck, getOutputCheck } from './utils/python';
+import { RETURN_TYPE_NONE, getAllowedTypesForSetCheck, getOutputCheck } from './utils/python';
 import { ExtendedPythonGenerator } from '../editor/extended_python_generator';
 import { MRC_STYLE_FUNCTIONS } from '../themes/styles'
 import { ClassMethodDefExtraState } from './mrc_class_method_def'
@@ -34,15 +34,13 @@ import { ClassMethodDefExtraState } from './mrc_class_method_def'
 
 export const BLOCK_NAME = 'mrc_call_python_function';
 
-enum FunctionKind {
+export enum FunctionKind {
   MODULE = 'module',
   STATIC = 'static',
   CONSTRUCTOR = 'constructor',
   INSTANCE = 'instance',
   INSTANCE_WITHIN = 'instance_within',
 }
-
-const RETURN_TYPE_NONE = 'None';
 
 export type FunctionArg = {
   name: string,

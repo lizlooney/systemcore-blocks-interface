@@ -28,7 +28,7 @@ import startingOpModeBlocks from '../modules/opmode_start.json';
 import startingMechanismBlocks from '../modules/mechanism_start.json';
 import startingRobotBlocks from '../modules/robot_start.json';
 
-import {extendedPythonGenerator} from '../editor/extended_python_generator';
+import { extendedPythonGenerator, replacePlaceholders } from '../editor/extended_python_generator';
 import { createGeneratorContext } from '../editor/generator_context';
 
 // Types, constants, and functions related to modules, regardless of where the modules are stored.
@@ -54,8 +54,6 @@ export const MODULE_TYPE_UNKNOWN = 'unknown';
 export const MODULE_TYPE_PROJECT = 'project';
 export const MODULE_TYPE_MECHANISM = 'mechanism';
 export const MODULE_TYPE_OPMODE = 'opmode';
-
-export const MODULE_NAME_PLACEHOLDER = '%module_name%';
 
 const DELIMITER_PREFIX = 'BlocksContent';
 const MARKER_MODULE_TYPE = 'moduleType: ';
@@ -372,7 +370,7 @@ export function extractBlocksContent(moduleContent: string): string {
 /**
  * Extract the exportedBlocks from the given module content.
  */
-export function extractExportedBlocks(moduleName: string, moduleContent: string): Block[] {
+export function extractExportedBlocks(modulePath: string, moduleContent: string): Block[] {
   const parts = getParts(moduleContent);
   let exportedBlocksContent = parts[PARTS_INDEX_EXPORTED_BLOCKS];
   if (exportedBlocksContent.startsWith(MARKER_EXPORTED_BLOCKS)) {
@@ -380,14 +378,7 @@ export function extractExportedBlocks(moduleName: string, moduleContent: string)
   }
 
   const exportedBlocks: Block[] = JSON.parse(exportedBlocksContent);
-  exportedBlocks.forEach((block) => {
-    if (block.extraState?.importModule === MODULE_NAME_PLACEHOLDER) {
-      block.extraState.importModule = moduleName;
-    }
-    if (block.fields?.MODULE_OR_CLASS === MODULE_NAME_PLACEHOLDER) {
-      block.fields.MODULE_OR_CLASS = moduleName;
-    }
-  });
+  replacePlaceholders(modulePath, exportedBlocks);
   return exportedBlocks;
 }
 
