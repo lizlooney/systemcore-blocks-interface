@@ -217,6 +217,54 @@ function createInstanceMethodBlock(
   return block;
 }
 
+export function addInstanceComponentBlocks(
+    functions: FunctionData[],
+    contents: toolboxItems.ContentsType[]) {
+  for (const functionData of functions) {
+    const block = createInstanceComponentBlock(functionData);
+    contents.push(block);
+  }
+}
+
+function createInstanceComponentBlock(
+    functionData: FunctionData, componentName: string): toolboxItems.Block {
+  const extraState: CallPythonFunctionExtraState = {
+    functionKind: FunctionKind.INSTANCE_COMPONENT,
+    returnType: functionData.returnType,
+    args: [],
+    tooltip: functionData.tooltip,
+    componentClassName: functionData.declaringClassName,
+    componentName: componentName,
+  };
+  const fields: {[key: string]: any} = {};
+  fields[FIELD_COMPONENT_NAME] = componentName;
+  fields[FIELD_FUNCTION_NAME] = functionData.functionName;
+  const inputs: {[key: string]: any} = {};
+  for (let i = 0; i < functionData.args.length; i++) {
+    const argData = functionData.args[i];
+    let argName = argData.name;
+    if (i === 0 && argName === 'self') {
+      continue;
+    }
+    extraState.args.push({
+      'name': argName,
+      'type': argData.type,
+    });
+    // Check if we should plug a variable getter block into the argument input socket.
+    const input = value.valueForFunctionArgInput(argData.type, argData.defaultValue);
+    if (input) {
+      inputs['ARG' + i] = input;
+    }
+  }
+  let block = new toolboxItems.Block(BLOCK_NAME, extraState, fields, Object.keys(inputs).length ? inputs : null);
+  if (functionData.returnType && functionData.returnType != 'None') {
+    const varName = variable.varNameForType(functionData.returnType);
+    if (varName) {
+      block = variable.createVariableSetterBlock(varName, block);
+    }
+  }
+  return block;
+}
 
 //..............................................................................
 
