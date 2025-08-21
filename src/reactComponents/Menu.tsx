@@ -185,7 +185,7 @@ export function Component(props: MenuProps): React.JSX.Element {
   const [noProjects, setNoProjects] = React.useState<boolean>(false);
   const [aboutDialogVisible, setAboutDialogVisible] = React.useState<boolean>(false);
   const [themeModalOpen, setThemeModalOpen] = React.useState<boolean>(false);
-  const [showUploadAndDownload, _setShowUploadAndDownload] = React.useState(false);
+  const [showUploadAndDownload, _setShowUploadAndDownload] = React.useState(true); // HeyLiz
 
   const handleThemeChange = (newTheme: string) => {
     props.setTheme(newTheme);
