@@ -104,7 +104,7 @@ export function makeModulePath(
 }
 
 /**
- * Returns the robot module path for the given project names.
+ * Returns the robot module path for the given project name.
  */
 export function makeRobotPath(projectName: string): string {
   return makeModulePath(projectName, CLASS_NAME_ROBOT, storageModule.ModuleType.ROBOT);
@@ -188,4 +188,11 @@ export function makeUniqueName(preferredName: string, existingNames: string[]): 
     suffix++;
     name = preferredName + suffix;
   }
+}
+
+/**
+ * Returns the project info path for the given project name.
+ */
+export function makeProjectInfoPath(projectName: string): string {
+  return projectName + '/project.info.json';
 }

@@ -20,6 +20,7 @@
  */
 
 import JSZip from 'jszip';
+import * as semver from 'semver';
 
 import * as commonStorage from './common_storage';
 import * as storageModule from './module';
@@ -33,6 +34,13 @@ export type Project = {
   robot: storageModule.Robot,
   mechanisms: storageModule.Mechanism[]
   opModes: storageModule.OpMode[],
+};
+
+const NO_VERSION = '0.0.0';
+const CURRENT_VERSION = '0.0.1';
+
+type ProjectInfo = {
+  version: string,
 };
 
 /**
@@ -54,6 +62,8 @@ export async function listProjectNames(storage: commonStorage.Storage): Promise<
  */
 export async function fetchProject(
     storage: commonStorage.Storage, projectName: string): Promise<Project> {
+  await updateProjectIfNecessary(storage, projectName);
+
   const modulePaths: string[] = await storage.listModulePaths(
       storageNames.makeModulePathRegexPattern(projectName));
 
@@ -119,6 +129,7 @@ export async function createProject(
   const opmodeContent = storageModuleContent.newOpModeContent(
       newProjectName, storageNames.CLASS_NAME_TELEOP);
   await storage.saveModule(opmodePath, opmodeContent);
+  await saveProjectInfo(storage, newProjectName);
 }
 
 /**
@@ -161,6 +172,10 @@ async function renameOrCopyProject(
       await storage.deleteModule(modulePath);
     }
   }
+  await saveProjectInfo(storage, newProjectName);
+  if (rename) {
+    await deleteProjectInfo(storage, projectName);
+  }
 }
 
 /**
@@ -177,6 +192,7 @@ export async function deleteProject(
   for (const modulePath of modulePaths) {
     await storage.deleteModule(modulePath);
   }
+  await deleteProjectInfo(storage, projectName);
 }
 
 /**
@@ -215,6 +231,7 @@ export async function addModuleToProject(
       } as storageModule.OpMode);
       break;
   }
+  await saveProjectInfo(storage, project.projectName);
 }
 /**
  * Removes a module from the project.
@@ -237,6 +254,7 @@ export async function removeModuleFromProject(
         break;
     }
     await storage.deleteModule(modulePath);
+    await saveProjectInfo(storage, project.projectName);
   }
 }
 
@@ -330,6 +348,7 @@ async function renameOrCopyModule(
         break;
     }
   }
+  await saveProjectInfo(storage, project.projectName);
 
   return newModulePath;
 }
@@ -445,6 +464,7 @@ export async function uploadProject(
     const modulePath = storageNames.makeModulePath(projectName, className, moduleType);
     await storage.saveModule(modulePath, moduleContentText);
   }
+  await saveProjectInfo(storage, projectName);
 }
 
 /**
@@ -490,4 +510,53 @@ async function processUploadedBlob(blobUrl: string): Promise<{ [className: strin
   }
 
   return fileNameToModuleContentText;
+}
+
+export async function saveProjectInfo(
+    storage: commonStorage.Storage, projectName: string): Promise<void> {
+  const projectInfo: ProjectInfo = {
+    version: CURRENT_VERSION,
+  };
+  const projectInfoText = JSON.stringify(projectInfo, null, 2);
+  const projectInfoPath = storageNames.makeProjectInfoPath(projectName);
+  await storage.saveModule(projectInfoPath, projectInfoText);
+}
+
+async function fetchProjectInfo(
+    storage: commonStorage.Storage, projectName: string): Promise<ProjectInfo> {
+  const projectInfoPath = storageNames.makeProjectInfoPath(projectName);
+  let projectInfo: ProjectInfo;
+  try {
+    const projectInfoText = await storage.fetchModuleContentText(projectInfoPath);
+    const parsedContent = JSON.parse(projectInfoText);
+    projectInfo = {
+      version: parsedContent.version,
+    };
+  } catch (error) {
+    projectInfo = {
+      version: NO_VERSION,
+    };
+  }
+  return projectInfo;
+}
+
+async function deleteProjectInfo(
+    storage: commonStorage.Storage, projectName: string): Promise<void> {
+  const projectInfoPath = storageNames.makeProjectInfoPath(projectName);
+  await storage.deleteModule(projectInfoPath);
+}
+
+async function updateProjectIfNecessary(
+    storage: commonStorage.Storage, projectName: string): Promise<void> {
+  const projectInfo = await fetchProjectInfo(storage, projectName);
+  if (semver.lt(projectInfo.version, CURRENT_VERSION)) {
+    switch (projectInfo.version) {
+      case '0.0.0':
+        // Project was saved without a project.info.json file.
+        // Nothing needs to be done to update to '0.0.1';
+        projectInfo.version = '0.0.1';
+        break;
+    }
+    await saveProjectInfo(storage, projectName);
+  }
 }
