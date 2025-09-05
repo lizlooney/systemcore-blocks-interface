@@ -62,3 +62,9 @@ code {
 .blocklyToolboxContents {
   scroll-behavior: smooth !important;
 }
+
+.horizontal-scroll-container {
+  overflow-x: auto; /* Enables horizontal scrolling when content overflows */
+  white-space: nowrap; /* Prevents content from wrapping to the next line */
+  /* Add any other styling as needed, e.g., padding, min-width */
+}

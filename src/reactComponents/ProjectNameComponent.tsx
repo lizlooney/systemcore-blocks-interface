@@ -106,6 +106,7 @@ export default function ProjectNameComponent(props: ProjectNameComponentProps): 
   };
 
   /** Renders the input field. */
+  // TODO(lizlooney): the placeholder should say 'Add Project' instead of 'Add Module'.
   const renderInput = (): React.JSX.Element => (
     <Antd.Input
       style={FULL_WIDTH_STYLE}
