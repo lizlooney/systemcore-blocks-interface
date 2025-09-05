@@ -99,8 +99,8 @@ const PORT = {
     for (let i = 0; i < this.ports_.length; i++) {
       const port = this.ports_[i];
       this.appendDummyInput('PORT_' + i)
-        .appendField(createFieldNonEditableText(port.portType), 'TYPE_' + i)
-        .appendField(createFieldDropdownForPortType(port.portType, port.portNumber), 'PORT_NUM_' + i)
+        .appendField(createFieldNonEditableText(port.portType))
+        .appendField(new Blockly.FieldTextInput(port.portNumber.toString()), 'PORT_NUM_' + i)
         .setAlign(Blockly.inputs.Align.RIGHT);
     }
   },
@@ -117,14 +117,8 @@ export const pythonFromBlock = function (
   
   const ports: string[] = [];
 
-  for (let i = 0; i < block.inputList.length; i++) {
-    const input = block.inputList[i];
-    if (input.name.startsWith('PORT_')) {
-      const portNumField = input.fieldRow.find(field => field.name === 'PORT_NUM_' + i);
-      if (portNumField) {
-        ports.push(portNumField.getValue() as string);
-      }
-    }
+  for (let i = 0; i < this.ports_.length; i++) {
+    ports.push(this.getFieldValue('PORT_NUM_' + i));
   }
   let code = 'port.';
   
