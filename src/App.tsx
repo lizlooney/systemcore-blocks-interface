@@ -79,7 +79,7 @@ const FULL_VIEWPORT_HEIGHT = '100vh';
 const FULL_HEIGHT = '100%';
 
 /** Default size for code panel. */
-const CODE_PANEL_DEFAULT_SIZE = '25%';
+const CODE_PANEL_DEFAULT_SIZE = '45%';
 
 /** Minimum size for code panel. */
 const CODE_PANEL_MIN_SIZE = 80;
