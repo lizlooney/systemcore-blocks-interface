@@ -44,6 +44,7 @@ export function getHardwareCategory(
           getRobotMechanismsCategory(editor),
           getComponentsCategory(editor, moduleType),
         ],
+        expanded: true,
       };
     case storageModule.ModuleType.MECHANISM:
       return getComponentsCategory(editor, moduleType);
@@ -57,6 +58,7 @@ export function getHardwareCategory(
           getRobotMethodsCategory(editor),
           getRobotEventHandlersCategory(editor),
         ],
+        expanded: true,
       };
   }
   throw new Error('moduleType has unexpected value: ' + moduleType);
