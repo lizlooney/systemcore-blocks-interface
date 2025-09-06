@@ -45,9 +45,7 @@ import * as clientSideStorage from './storage/client_side_storage';
 import * as CustomBlocks from './blocks/setup_custom_blocks';
 
 import { initialize as initializePythonBlocks } from './blocks/utils/python';
-import * as ChangeFramework from './blocks/utils/change_framework'
 import { registerToolboxButton } from './blocks/mrc_event_handler'
-import { mutatorOpenListener } from './blocks/mrc_param_container'
 import { TOOLBOX_UPDATE_EVENT } from './blocks/mrc_mechanism_component_holder';
 import { antdThemeFromString } from './reactComponents/ThemeModal';
 import { useTranslation } from 'react-i18next';
@@ -171,7 +169,7 @@ const AppContent: React.FC<AppContentProps> = ({ project, setProject }): React.J
   const [languageInitialized, setLanguageInitialized] = React.useState(false);
   const [themeInitialized, setThemeInitialized] = React.useState(false);
 
-  const blocksEditor = React.useRef<editor.Editor | null>(null);
+  const [blocksEditor, setBlocksEditor] = React.useState<editor.Editor | null>(null);
   const generatorContext = React.useRef<GeneratorContext | null>(null);
   const blocklyComponent = React.useRef<BlocklyComponentType | null>(null);
 
@@ -417,12 +415,14 @@ const AppContent: React.FC<AppContentProps> = ({ project, setProject }): React.J
 
   // Update generator context and load module blocks when current module changes
   React.useEffect(() => {
+    console.log("HeyLiz - currentModule changed - currentModule is " + (currentModule ? currentModule.className : "none"));
     if (generatorContext.current) {
       generatorContext.current.setModule(currentModule);
     }
     if (blocksEditor.current) {
       blocksEditor.current.loadModuleBlocks(currentModule, project);
     }
+    // HeyLiz - set up the listener for updating the python code?
   }, [currentModule]);
 
   const setupWorkspace = (newWorkspace: Blockly.WorkspaceSvg) => {
@@ -430,8 +430,6 @@ const AppContent: React.FC<AppContentProps> = ({ project, setProject }): React.J
       return;
     }
     // Recreate workspace when Blockly component is ready
-    ChangeFramework.setup(newWorkspace);
-    newWorkspace.addChangeListener(mutatorOpenListener);
     newWorkspace.addChangeListener(handleBlocksChanged);
 
     registerToolboxButton(newWorkspace, messageApi);
@@ -455,18 +453,6 @@ const AppContent: React.FC<AppContentProps> = ({ project, setProject }): React.J
 
     blocksEditor.current.updateToolbox(shownPythonToolboxCategories);
   };
-
-  // Initialize Blockly workspace and editor when component and storage are ready
-  React.useEffect(() => {
-    if (!blocklyComponent.current || !storage) {
-      return;
-    }
-
-    const blocklyWorkspace = blocklyComponent.current.getBlocklyWorkspace();
-    if (blocklyWorkspace) {
-      setupWorkspace(blocklyWorkspace);
-    }
-  }, [blocklyComponent, storage]);
 
   // Generate code when module or regeneration trigger changes
   React.useEffect(() => {
@@ -543,32 +529,24 @@ const AppContent: React.FC<AppContentProps> = ({ project, setProject }): React.J
                 project={project}
                 setProject={setProject}
                 storage={storage}
+                theme={theme}
               />
-              <Antd.Layout>
-                <Content>
-                  <BlocklyComponent
-                    theme={theme}
-                    onWorkspaceRecreated={setupWorkspace}
-                    ref={blocklyComponent}
-                  />
-                </Content>
-                <Sider
-                  collapsible
-                  reverseArrow={true}
-                  collapsed={rightCollapsed}
-                  collapsedWidth={CODE_PANEL_MIN_SIZE}
-                  width={CODE_PANEL_DEFAULT_SIZE}
-                  onCollapse={(collapsed: boolean) => setRightCollapsed(collapsed)}
-                >
-                  <CodeDisplay
-                    generatedCode={generatedCode}
-                    messageApi={messageApi}
-                    setAlertErrorMessage={setAlertErrorMessage}
-                    theme={theme}
-                  />
-                </Sider>
-              </Antd.Layout>
             </Antd.Layout>
+            <Sider
+              collapsible
+              reverseArrow={true}
+              collapsed={rightCollapsed}
+              collapsedWidth={CODE_PANEL_MIN_SIZE}
+              width={CODE_PANEL_DEFAULT_SIZE}
+              onCollapse={(collapsed: boolean) => setRightCollapsed(collapsed)}
+            >
+              <CodeDisplay
+                generatedCode={generatedCode}
+                messageApi={messageApi}
+                setAlertErrorMessage={setAlertErrorMessage}
+                theme={theme}
+              />
+            </Sider>
           </Antd.Layout>
         </Antd.Layout>
 

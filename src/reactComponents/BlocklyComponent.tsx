@@ -40,7 +40,8 @@ export interface BlocklyComponentType {
 /** Interface for props passed to the BlocklyComponent. */
 export interface BlocklyComponentProps {
   theme: string;
-  onWorkspaceRecreated: (workspace: Blockly.WorkspaceSvg) => void;
+  tab: Tabs.TabItem;
+  onWorkspaceRecreated: (workspace: Blockly.WorkspaceSvg, tab: Tabs.TabItem) => void;
 }
 
 /** Grid spacing for the Blockly workspace. */
@@ -150,7 +151,7 @@ const BlocklyComponent = React.forwardRef<BlocklyComponentType | null, BlocklyCo
           cleanupWorkspace();
           initializeWorkspace();
           if (props.onWorkspaceRecreated) {
-            props.onWorkspaceRecreated(workspaceRef.current!);
+            props.onWorkspaceRecreated(workspaceRef.current!, props.tab);
           }
           return;
         }
@@ -175,7 +176,7 @@ const BlocklyComponent = React.forwardRef<BlocklyComponentType | null, BlocklyCo
 
         // Force complete toolbox rebuild by calling onWorkspaceRecreated AFTER locale is set
         if (props.onWorkspaceRecreated) {
-          props.onWorkspaceRecreated(workspaceRef.current);
+          props.onWorkspaceRecreated(workspaceRef.current, props.tab);
         }
       };
 

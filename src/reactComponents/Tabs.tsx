@@ -34,12 +34,18 @@ import {
 import AddTabDialog from './AddTabDialog';
 import ClassNameComponent from './ClassNameComponent';
 import { TabType, TabTypeUtils } from '../types/TabType';
+import BlocklyComponent, { BlocklyComponentType } from './BlocklyComponent';
+import * as ChangeFramework from '../blocks/utils/change_framework'
+import { mutatorOpenListener } from '../blocks/mrc_param_container'
+import * as editor from '../editor/editor';
 
 /** Represents a tab item in the tab bar. */
 export interface TabItem {
   key: string;
   title: string;
   type: TabType;
+  blocklyComponent: BlocklyComponentType | null;
+  editor: editor.Editor | null;
 }
 
 /** Props for the Tabs component. */
@@ -53,6 +59,7 @@ export interface TabsProps {
   currentModule: storageModule.Module | null;
   setCurrentModule: (module: storageModule.Module | null) => void;
   storage: commonStorage.Storage | null;
+  theme: string;
 }
 
 /** Default copy suffix for tab names. */
@@ -284,6 +291,12 @@ export function Component(props: TabsProps): React.JSX.Element {
     return tabType === TabType.ROBOT ? 1 : MIN_TABS_FOR_CLOSE_OTHERS;
   };
 
+  const setupWorkspace = (newWorkspace: Blockly.WorkspaceSvg, tab: TabItem) => {
+    tab.blocklyComponent = newWorkspace;
+    ChangeFramework.setup(newWorkspace);
+    newWorkspace.addChangeListener(mutatorOpenListener);
+  }
+
   /** Creates context menu items for a tab. */
   const createTabContextMenuItems = (tab: TabItem): any[] => [
     {
@@ -337,6 +350,14 @@ export function Component(props: TabsProps): React.JSX.Element {
       ),
       icon: TabTypeUtils.getIcon(tab.type),
       closable: tab.type !== TabType.ROBOT,
+      children: (
+        <BlocklyComponent
+          theme={props.theme}
+          tab={tab}
+          onWorkspaceRecreated={setupWorkspace}
+          ref={tab.blocklyComponent}
+        />
+      ),
     }));
   };
 
