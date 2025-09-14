@@ -35,12 +35,15 @@ import { useTranslation } from 'react-i18next';
 /** Interface for methods exposed by the BlocklyComponent. */
 export interface BlocklyComponentType {
   getBlocklyWorkspace: () => Blockly.WorkspaceSvg;
+  setActive: (active: boolean) => void;
 }
 
 /** Interface for props passed to the BlocklyComponent. */
 export interface BlocklyComponentProps {
+  modulePath: string;
+  onBlocklyComponentCreated: (modulePath: string, blocklyComponent: BlocklyComponentType) => void;
   theme: string;
-  onWorkspaceRecreated: (workspace: Blockly.WorkspaceSvg) => void;
+  onWorkspaceRecreated: (modulePath: string, workspace: Blockly.WorkspaceSvg) => void;
 }
 
 /** Grid spacing for the Blockly workspace. */
@@ -80,10 +83,13 @@ const WORKSPACE_STYLE: React.CSSProperties = {
  * React component that renders a Blockly workspace with proper initialization,
  * cleanup, and resize handling.
  */
-const BlocklyComponent = React.forwardRef<BlocklyComponentType | null, BlocklyComponentProps>(
-    (props, ref): React.JSX.Element => {
+export default function BlocklyComponent(props: BlocklyComponentProps): React.JSX.Element {
+// TODO(lizlooney): Fix indentation in a separate commit.
       const blocklyDiv = React.useRef<HTMLDivElement | null>(null);
       const workspaceRef = React.useRef<Blockly.WorkspaceSvg | null>(null);
+      const parentDiv = React.useRef<HTMLDivElement | null>(null);
+      const savedScrollX = React.useRef<number>(0);
+      const savedScrollY = React.useRef<number>(0);
 
       const { t, i18n } = useTranslation();
       
@@ -150,7 +156,7 @@ const BlocklyComponent = React.forwardRef<BlocklyComponentType | null, BlocklyCo
           cleanupWorkspace();
           initializeWorkspace();
           if (props.onWorkspaceRecreated) {
-            props.onWorkspaceRecreated(workspaceRef.current!);
+            props.onWorkspaceRecreated(props.modulePath, workspaceRef.current!);
           }
           return;
         }
@@ -175,7 +181,7 @@ const BlocklyComponent = React.forwardRef<BlocklyComponentType | null, BlocklyCo
 
         // Force complete toolbox rebuild by calling onWorkspaceRecreated AFTER locale is set
         if (props.onWorkspaceRecreated) {
-          props.onWorkspaceRecreated(workspaceRef.current);
+          props.onWorkspaceRecreated(props.modulePath, workspaceRef.current);
         }
       };
 
@@ -207,6 +213,7 @@ const BlocklyComponent = React.forwardRef<BlocklyComponentType | null, BlocklyCo
         workspaceConfig.rtl = i18n.dir() === 'rtl';
         const workspace = Blockly.inject(blocklyDiv.current, workspaceConfig);
         workspaceRef.current = workspace;
+        parentDiv.current = blocklyDiv.current.parentNode as HTMLDivElement;
       };
 
       /** Cleans up the Blockly workspace on unmount. */
@@ -220,7 +227,10 @@ const BlocklyComponent = React.forwardRef<BlocklyComponentType | null, BlocklyCo
       /** Handles workspace resize events. */
       const handleWorkspaceResize = (): void => {
         if (workspaceRef.current) {
-          Blockly.svgResize(workspaceRef.current);
+          if (workspaceRef.current.isVisible() &&
+              Blockly.getMainWorkspace().id === workspaceRef.current.id) {
+            Blockly.svgResize(workspaceRef.current);
+          }
         }
       };
 
@@ -247,8 +257,55 @@ const BlocklyComponent = React.forwardRef<BlocklyComponentType | null, BlocklyCo
         return workspaceRef.current;
       };
 
+      const setActive = (active: boolean): void => {
+        if (workspaceRef.current) {
+          if (!active) {
+            // Save the scroll position before making this workspace invisible.
+            if (isScrollPositionValid(workspaceRef.current)) {
+              savedScrollX.current = workspaceRef.current.scrollX;
+              savedScrollY.current = workspaceRef.current.scrollY;
+            } else {
+              savedScrollX.current = 0;
+              savedScrollY.current = 0;
+            }
+          }
+          workspaceRef.current.setVisible(active);
+        }
+        if (parentDiv.current) {
+          parentDiv.current.hidden = !active;
+        }
+        if (workspaceRef.current) {
+          if (active) {
+            workspaceRef.current.markFocused();
+
+            const needScroll = !isScrollPositionValid(workspaceRef.current);
+            if (Blockly.getMainWorkspace().id === workspaceRef.current.id) {
+              Blockly.svgResize(workspaceRef.current);
+              if (needScroll) {
+                workspaceRef.current.scroll(savedScrollX.current, savedScrollY.current);
+              }
+            }
+          }
+        }
+      };
+
+      const isScrollPositionValid = (workspace: Blockly.WorkspaceSvg): boolean => {
+        return !(
+            Math.round(workspace.getMetrics().svgWidth) === 0 &&
+            Math.round(workspace.getMetrics().svgHeight) === 0 &&
+            Math.round(workspace.scrollX) === -10 &&
+            Math.round(workspace.scrollY) === -10);
+      };
+
       // Initialize Blockly workspace
       React.useEffect(() => {
+        if (props.onBlocklyComponentCreated) {
+          const blocklyComponent: BlocklyComponentType = {
+            getBlocklyWorkspace,
+            setActive,
+          };
+          props.onBlocklyComponentCreated(props.modulePath, blocklyComponent);
+        }
         initializeWorkspace();
         return cleanupWorkspace;
       }, []);
@@ -270,23 +327,9 @@ const BlocklyComponent = React.forwardRef<BlocklyComponentType | null, BlocklyCo
         return setupResizeObserver();
       }, []);
 
-      // Expose methods through ref
-      React.useImperativeHandle(
-          ref,
-          (): BlocklyComponentType => ({
-            getBlocklyWorkspace,
-          }),
-          []
-      );
-
       return (
         <div className="blockly-workspace-container" style={FULL_SIZE_STYLE}>
           <div ref={blocklyDiv} style={WORKSPACE_STYLE} />
         </div>
       );
     }
-);
-
-BlocklyComponent.displayName = 'BlocklyComponent';
-
-export default BlocklyComponent;
