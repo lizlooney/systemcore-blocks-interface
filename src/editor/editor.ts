@@ -31,6 +31,7 @@ import * as eventHandler from '../blocks/mrc_event_handler';
 import * as classMethodDef from '../blocks/mrc_class_method_def';
 import * as mechanismComponentHolder from '../blocks/mrc_mechanism_component_holder';
 //import { testAllBlocksInToolbox } from '../toolbox/toolbox_tests';
+import * as toolboxItems from '../toolbox/items';
 import { getToolboxJSON } from '../toolbox/toolbox';
 
 const EMPTY_TOOLBOX: Blockly.utils.toolbox.ToolboxDefinition = {
@@ -200,10 +201,60 @@ export class Editor {
     }
     const toolbox = getToolboxJSON(this.shownPythonToolboxCategories, this);
     if (toolbox != this.toolbox) {
+      // HeyLiz get rid of the warnings and errors and the move this to a file in ../toolbox/ (maybe items.ts)
+      if (this.toolbox.contents.length) {
+        const previousToolbox = this.blocklyWorkspace.getToolbox();
+        if (previousToolbox) {
+          const expandedPaths: string[] = [];
+          this.collectExpandedPaths(
+              '', null, (previousToolbox as any).getToolboxItems(), expandedPaths);
+          this.applyExpandedPaths('', toolbox.contents, expandedPaths);
+        }
+      }
       this.toolbox = toolbox;
       this.blocklyWorkspace.updateToolbox(toolbox);
       // testAllBlocksInToolbox(toolbox);
     }
+  }
+
+  private static makePath(parentPath: string, name: string) {
+    if (parentPath) {
+      return parentPath + '\u2705' + name;
+    }
+    return name;
+  }
+
+  private collectExpandedPaths(
+      parentPath: string, parent: Blockly.IToolboxItem, items: Blockly.IToolboxItem[], expandedPaths: string[]) {
+    items
+        .filter(item => item.getParent() == parent)
+        .filter(item => item.isCollapsible())
+        .forEach(item => {
+      const collapsibleItem = item as Blockly.ICollapsibleToolboxItem;
+      const path = Editor.makePath(parentPath, collapsibleItem.getName());
+      if (collapsibleItem.isExpanded()) {
+        expandedPaths.push(path);
+      }
+      this.collectExpandedPaths(path, item, collapsibleItem.getChildToolboxItems(), expandedPaths);
+    });
+  }
+
+  private applyExpandedPaths(
+      parentPath: string, contents: toolboxItems.ContentsType[], expandedPaths: string[]) {
+    contents.filter(item => item.kind === 'category').forEach(item => {
+      const category = item as toolboxItems.Category;
+      const path = Editor.makePath(parentPath, category.name);
+      if (expandedPaths.includes(path)) {
+        category.expanded = true;
+      } else {
+        if (category.expanded) {
+          delete category.expanded;
+        }
+      }
+      if (category.contents) {
+        this.applyExpandedPaths(path, category.contents, expandedPaths);
+      }
+    });
   }
 
   public isModified(): boolean {
