@@ -71,6 +71,24 @@
     "NO_FILES_FOUND": "No {{type}} files found",
     "MECHANISMS": "Mechanisms",    
     "OPMODES": "OpModes",
+    "ABOUT": {
+        "TITLE": "About",
+        "OK": "OK",
+        "VERSION": "Version",
+        "NAME": "Name",
+        "AUTHORS": "Authors",
+        "URL": "URL",
+        "LICENSE": "License",
+        "TAB_ATTRIBUTIONS": "Third-Party Attributions",
+        "TAB_DEPENDENCIES": "Dependencies",
+        "LOADING_ATTRIBUTIONS": "Loading attributions...",
+        "LOADING_DEPENDENCIES": "Loading dependencies...",
+        "ATTRIBUTIONS_NOT_FOUND": "Attributions file not found.",
+        "ERROR_LOADING_ATTRIBUTIONS": "Error loading attributions.",
+        "DEPENDENCIES_NOT_AVAILABLE": "Dependencies information not available.",
+        "ERROR_LOADING_DEPENDENCIES": "Error loading dependencies.",
+        "COPYRIGHT": "© 2025 FIRST. All rights reserved."
+    },
     "BLOCKLY":{
         "OF_TYPE": "of type",
         "WITH": "with",
@@ -78,6 +96,9 @@
         "PARAMETER": "parameter",
         "PARAMETERS_CAN_ONLY_GO_IN_THEIR_METHODS_BLOCK": "Parameters can only go in their method's block",
         "EVENT_HANDLER_ALREADY_ON_WORKSPACE": "This event handler is already on the workspace.",
+        "EVENT_HANDLER_ROBOT_EVENT_NOT_FOUND": "This block is an event handler for an event that no longer exists.",
+        "EVENT_HANDLER_MECHANISM_EVENT_NOT_FOUND": "This block is an event handler for an event that no longer exists.",
+        "EVENT_HANDLER_MECHANISM_NOT_FOUND": "This block is an event handler for an event in a mechanism that no longer exists.",
         "COMPONENTS": "Components",
         "PRIVATE_COMPONENTS": "Private Components",
         "EVENTS": "Events",
@@ -93,6 +114,12 @@
         "ROBOT": "robot",
         "CREATE": "create",
         "FIRE": "fire",
+        "CUSTOM_EVENTS_LABEL": "Custom Events",
+        "CUSTOM_METHODS_LABEL": "Custom Methods",
+        "MORE_ROBOT_METHODS_LABEL": "More Robot Methods",
+        "MORE_MECHANISM_METHODS_LABEL": "More Mechanism Methods",
+        "MORE_OPMODE_METHODS_LABEL": "More OpMode Methods",
+        "COMMENT_DEFAULT_TEXT": "Enter your comment here!",
         "TOOLTIP":{
             "EVALUATE_BUT_IGNORE_RESULT": "Executes the connected block and ignores the result.  Allows you to call a function and ignore the return value.",
             "NONE": "Returns None.",
@@ -141,7 +168,8 @@
             "CALL_ROBOT_INSTANCE_METHOD_MISSING_METHOD": "This block calls a method that no longer exists in the robot.",
             "CALL_MECHANISM_INSTANCE_METHOD_INSIDE_MECHANISM": "This block is not allowed to be used inside a mechanism.",
             "CALL_MECHANISM_INSTANCE_METHOD_MISSING_METHOD": "This block calls a method that no longer exists in the mechanism.",
-            "CALL_MECHANISM_INSTANCE_METHOD_MISSING_MECHANISM": "This block calls a method in a mechanism that no longer exists."
+            "CALL_MECHANISM_INSTANCE_METHOD_MISSING_MECHANISM": "This block calls a method in a mechanism that no longer exists.",
+            "EVENT_NOT_IN_HOLDER": "This block can only go in the events section of the robot or mechanism."
         }
     }   
 }

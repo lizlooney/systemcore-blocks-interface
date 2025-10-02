@@ -72,6 +72,24 @@
     },
     "MECHANISMS": "Mecanismos",
     "OPMODES": "OpModes",
+    "ABOUT": {
+        "TITLE": "Acerca de",
+        "OK": "Aceptar",
+        "VERSION": "Versión",
+        "NAME": "Nombre",
+        "AUTHORS": "Autores",
+        "URL": "URL",
+        "LICENSE": "Licencia",
+        "TAB_ATTRIBUTIONS": "Atribuciones de Terceros",
+        "TAB_DEPENDENCIES": "Dependencias",
+        "LOADING_ATTRIBUTIONS": "Cargando atribuciones...",
+        "LOADING_DEPENDENCIES": "Cargando dependencias...",
+        "ATTRIBUTIONS_NOT_FOUND": "Archivo de atribuciones no encontrado.",
+        "ERROR_LOADING_ATTRIBUTIONS": "Error al cargar atribuciones.",
+        "DEPENDENCIES_NOT_AVAILABLE": "Información de dependencias no disponible.",
+        "ERROR_LOADING_DEPENDENCIES": "Error al cargar dependencias.",
+        "COPYRIGHT": "© 2025 FIRST. Todos los derechos reservados."
+    },
     "BLOCKLY": {
         "OF_TYPE": "de tipo",
         "WITH": "con",
@@ -79,6 +97,9 @@
         "PARAMETER": "parámetro",
         "PARAMETERS_CAN_ONLY_GO_IN_THEIR_METHODS_BLOCK": "Los parámetros solo pueden ir en el bloque de su método",
         "EVENT_HANDLER_ALREADY_ON_WORKSPACE": "Este controlador de eventos ya está en el área de trabajo.",
+        "EVENT_HANDLER_ROBOT_EVENT_NOT_FOUND": "Este bloque es un controlador de eventos para un evento que ya no existe.",
+        "EVENT_HANDLER_MECHANISM_EVENT_NOT_FOUND": "Este bloque es un controlador de eventos para un evento que ya no existe.",
+        "EVENT_HANDLER_MECHANISM_NOT_FOUND": "Este bloque es un controlador de eventos para un evento en un mecanismo que ya no existe.",
         "COMPONENTS": "Componentes",
         "PRIVATE_COMPONENTS": "Componentes Privados",
         "EVENTS": "Eventos",
@@ -94,6 +115,12 @@
         "ROBOT": "robot",
         "CREATE": "crear",
         "FIRE": "disparar",
+        "CUSTOM_EVENTS_LABEL": "Eventos Personalizados",
+        "CUSTOM_METHODS_LABEL": "Métodos Personalizados",
+        "MORE_ROBOT_METHODS_LABEL": "Más Métodos del Robot",
+        "MORE_MECHANISM_METHODS_LABEL": "Más Métodos del Mecanismo",
+        "MORE_OPMODE_METHODS_LABEL": "Más Métodos del OpMode",
+        "COMMENT_DEFAULT_TEXT": "¡Ingresa tu comentario aquí!",
         "TOOLTIP": {
             "EVALUATE_BUT_IGNORE_RESULT": "Ejecuta el bloque conectado e ignora el resultado. Te permite llamar una función e ignorar el valor de retorno.",
             "NONE": "No devuelve ninguno.",
@@ -142,7 +169,8 @@
             "CALL_ROBOT_INSTANCE_METHOD_MISSING_METHOD": "Este bloque llama a un método que ya no existe en el robot.",
             "CALL_MECHANISM_INSTANCE_METHOD_INSIDE_MECHANISM": "No se permite utilizar este bloque dentro de un mecanismo.",
             "CALL_MECHANISM_INSTANCE_METHOD_MISSING_METHOD": "Este bloque llama a un método que ya no existe en el mecanismo.",
-            "CALL_MECHANISM_INSTANCE_METHOD_MISSING_MECHANISM": "Este bloque llama a un método en un mecanismo que ya no existe."
+            "CALL_MECHANISM_INSTANCE_METHOD_MISSING_MECHANISM": "Este bloque llama a un método en un mecanismo que ya no existe.",
+            "EVENT_NOT_IN_HOLDER": "Este bloque solo puede ir en la sección de eventos del robot o mecanismo."
         }
     }
 }

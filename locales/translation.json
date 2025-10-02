@@ -71,6 +71,24 @@
     "NO_FILES_FOUND": "לא נמצאו קבצי {{type}}",
   "MECHANISMS": "מנגנונים",    
   "OPMODES": "אופמודים",
+  "ABOUT": {
+    "TITLE": "אודות",
+    "OK": "אישור",
+    "VERSION": "גרסה",
+    "NAME": "שם",
+    "AUTHORS": "מחברים",
+    "URL": "כתובת URL",
+    "LICENSE": "רישיון",
+    "TAB_ATTRIBUTIONS": "ייחוסים לצד שלישי",
+    "TAB_DEPENDENCIES": "תלויות",
+    "LOADING_ATTRIBUTIONS": "טוען ייחוסים...",
+    "LOADING_DEPENDENCIES": "טוען תלויות...",
+    "ATTRIBUTIONS_NOT_FOUND": "קובץ הייחוסים לא נמצא.",
+    "ERROR_LOADING_ATTRIBUTIONS": "שגיאה בטעינת ייחוסים.",
+    "DEPENDENCIES_NOT_AVAILABLE": "מידע על תלויות אינו זמין.",
+    "ERROR_LOADING_DEPENDENCIES": "שגיאה בטעינת תלויות.",
+    "COPYRIGHT": "© 2025 FIRST. כל הזכויות שמורות."
+  },
   "BLOCKLY": {
     "OF_TYPE": "מטיפוס",
     "WITH": "עם",
@@ -78,6 +96,9 @@
     "PARAMETER": "פרמטר",
     "PARAMETERS_CAN_ONLY_GO_IN_THEIR_METHODS_BLOCK": "פרמטרים יכולים להופיע רק בתוך הבלוק של המתודה שלהם.",
     "EVENT_HANDLER_ALREADY_ON_WORKSPACE": "מנהל האירועים הזה כבר נמצא בסביבת העבודה.",
+    "EVENT_HANDLER_ROBOT_EVENT_NOT_FOUND": "הבלוק הזה הוא מנהל אירועים לאירוע שכבר לא קיים.",
+    "EVENT_HANDLER_MECHANISM_EVENT_NOT_FOUND": "הבלוק הזה הוא מנהל אירועים לאירוע שכבר לא קיים.",
+    "EVENT_HANDLER_MECHANISM_NOT_FOUND": "הבלוק הזה הוא מנהל אירועים לאירוע במנגנון שכבר לא קיים.",
     "COMPONENTS": "רכיבים",
     "PRIVATE_COMPONENTS": "רכיבים פרטיים",
     "EVENTS": "אירועים",
@@ -93,6 +114,12 @@
     "ROBOT": "רובוט",
     "CREATE": "צור",
     "FIRE": "הפעל",
+    "CUSTOM_EVENTS_LABEL": "אירועים מותאמים אישית",
+    "CUSTOM_METHODS_LABEL": "מתודות מותאמות אישית",
+    "MORE_ROBOT_METHODS_LABEL": "מתודות נוספות לרובוט",
+    "MORE_MECHANISM_METHODS_LABEL": "מתודות נוספות למנגנון",
+    "MORE_OPMODE_METHODS_LABEL": "מתודות נוספות לאופמוד",
+    "COMMENT_DEFAULT_TEXT": "הזן את ההערה שלך כאן!",
     "TOOLTIP": {
       "EVALUATE_BUT_IGNORE_RESULT": "מבצע את הבלוק המחובר ומתעלם מהתוצאה. מאפשר לקרוא לפונקציה מבלי להשתמש בערך שהיא מחזירה.",
       "NONE": "מחזיר כלום.",
@@ -141,7 +168,8 @@
       "CALL_ROBOT_INSTANCE_METHOD_MISSING_METHOD": "בלוק זה קורא למתודה שכבר לא קיימת ברובוט.",
       "CALL_MECHANISM_INSTANCE_METHOD_INSIDE_MECHANISM": "בלוק זה אינו מורשה לשימוש בתוך מנגנון.",
       "CALL_MECHANISM_INSTANCE_METHOD_MISSING_METHOD": "בלוק זה קורא למתודה שכבר לא קיימת במנגנון.",
-      "CALL_MECHANISM_INSTANCE_METHOD_MISSING_MECHANISM": "בלוק זה קורא למתודה במנגנון שכבר לא קיים."
+      "CALL_MECHANISM_INSTANCE_METHOD_MISSING_MECHANISM": "בלוק זה קורא למתודה במנגנון שכבר לא קיים.",
+      "EVENT_NOT_IN_HOLDER": "בלוק זה יכול להיכנס רק לאזור האירועים של הרובוט או המנגנון."
     }
   }
 }
