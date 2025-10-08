@@ -24,7 +24,7 @@ import * as Blockly from 'blockly';
 import { MRC_STYLE_EVENTS } from '../themes/styles'
 import { Parameter } from './mrc_class_method_def';
 import { ExtendedPythonGenerator } from '../editor/extended_python_generator';
-import { MUTATOR_BLOCK_NAME, PARAM_CONTAINER_BLOCK_NAME, MethodMutatorArgBlock } from './mrc_param_container'
+import * as paramContainer from './mrc_param_container'
 import {
     BLOCK_NAME as MRC_MECHANISM_COMPONENT_HOLDER,
     MechanismComponentHolderBlock,
@@ -70,12 +70,13 @@ const EVENT = {
    */
   init: function (this: EventBlock): void {
     this.mrcHasNotInHolderWarning = false;
+    this.mrcParameters = [];
     this.setStyle(MRC_STYLE_EVENTS);
     this.appendDummyInput(INPUT_TITLE)
-      .appendField(new Blockly.FieldTextInput('my_event'), FIELD_EVENT_NAME);
+      .appendField(new Blockly.FieldTextInput(''), FIELD_EVENT_NAME);
     this.setPreviousStatement(true, OUTPUT_NAME);
     this.setNextStatement(true, OUTPUT_NAME);
-    this.setMutator(new Blockly.icons.MutatorIcon([MUTATOR_BLOCK_NAME], this));
+    this.updateBlock_();
   },
 
   /**
@@ -101,6 +102,7 @@ const EVENT = {
    */
   loadExtraState: function (this: EventBlock, extraState: EventExtraState): void {
     this.mrcEventId = extraState.eventId ? extraState.eventId : this.id;
+    console.log("HeyLiz - loadExtraState - setting this.mrcParameters to []");
     this.mrcParameters = [];
     if (extraState.params) {
       extraState.params.forEach((arg) => {
@@ -125,52 +127,44 @@ const EVENT = {
 
     const nameField = new Blockly.FieldTextInput(name);
     input.insertFieldAt(0, nameField, FIELD_EVENT_NAME);
-    this.setMutator(new Blockly.icons.MutatorIcon([MUTATOR_BLOCK_NAME], this));
+    this.setMutator(new Blockly.icons.MutatorIcon(paramContainer.getFlyoutBlockTypes(), this));
     nameField.setValidator(this.mrcNameFieldValidator.bind(this, nameField));
 
     this.mrcUpdateParams();
   },
-  compose: function (this: EventBlock, containerBlock: any) {
-    // Parameter list.
+  compose: function (this: EventBlock, containerBlock: Blockly.Block) {
+    if (containerBlock.type !== paramContainer.PARAM_CONTAINER_BLOCK_NAME) {
+      throw new Error('compose: containerBlock.type should be ' + paramContainer.PARAM_CONTAINER_BLOCK_NAME);
+    }
+    console.log("HeyLiz - compose - setting this.mrcParameters to []");
     this.mrcParameters = [];
 
-    let paramBlock = containerBlock.getInputTargetBlock('STACK');
-    while (paramBlock) {
+    const paramContainerBlock = containerBlock as paramContainer.ParamContainerBlock;
+    paramContainerBlock.getParamItemBlocks().forEach(paramItemBlock => {
+      const itemName = paramItemBlock.getName();
       const param: Parameter = {
-        name: paramBlock.getFieldValue('NAME'),
+        name: itemName,
         type: ''
-      }
-      if (paramBlock.originalName) {
-        // This is a mutator arg block, so we can get the original name.
-        paramBlock.originalName = param.name;
-      }
+      };
+      paramItemBlock.setOriginalName(itemName);
       this.mrcParameters.push(param);
-      paramBlock = paramBlock.nextConnection && paramBlock.nextConnection.targetBlock();
-    }
+    });
+
     this.mrcUpdateParams();
     mutateMethodCallers(this.workspace, this.mrcEventId, this.getEvent());
   },
   decompose: function (this: EventBlock, workspace: Blockly.Workspace) {
     // This is a special sub-block that only gets created in the mutator UI.
     // It acts as our "top block"
-    const topBlock = workspace.newBlock(PARAM_CONTAINER_BLOCK_NAME);
-    (topBlock as Blockly.BlockSvg).initSvg();
-
-    // Then we add one sub-block for each item in the list.
-    let connection = topBlock!.getInput('STACK')!.connection;
-
-    for (let i = 0; i < this.mrcParameters.length; i++) {
-      const itemBlock = workspace.newBlock(MUTATOR_BLOCK_NAME);
-      (itemBlock as Blockly.BlockSvg).initSvg();
-      itemBlock.setFieldValue(this.mrcParameters[i].name, 'NAME');
-      (itemBlock as MethodMutatorArgBlock).originalName = this.mrcParameters[i].name;
-
-      connection!.connect(itemBlock.previousConnection!);
-      connection = itemBlock.nextConnection;
-    }
-    return topBlock;
+    const parameterNames: string[] = [];
+    console.log("HeyLiz - decompose - this.mrcParameters.length is " + this.mrcParameters.length);
+    this.mrcParameters.forEach(parameter => {
+      parameterNames.push(parameter.name);
+    });
+    return paramContainer.createMutatorBlocks(workspace, parameterNames);
   },
   mrcUpdateParams: function (this: EventBlock) {
+    console.log("HeyLiz - mrcUpdateParams - this.mrcParameters.length is " + this.mrcParameters.length);
     if (this.mrcParameters.length > 0) {
       const input = this.getInput(INPUT_TITLE);
       if (input) {
@@ -223,6 +217,12 @@ const EVENT = {
       }
     }
     mrcDescendantsMayHaveChanged(this.workspace);
+  },
+  /**
+   * mrcOnMutatorOpen is called when the mutator on an EventBlock is opened.
+   */
+  mrcOnMutatorOpen: function(this: EventBlock): void {
+    paramContainer.onMutatorOpen(this);
   },
   checkBlockIsInHolder: function(this: EventBlock): void {
     const rootBlock: Blockly.Block | null = this.getRootBlock();

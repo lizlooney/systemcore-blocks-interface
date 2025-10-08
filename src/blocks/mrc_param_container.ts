@@ -20,99 +20,110 @@
  * @author alan@porpoiseful.com (Alan Smith)
  */
 import * as Blockly from 'blockly';
-import * as ChangeFramework from './utils/change_framework'
 import { MRC_STYLE_CLASS_BLOCKS } from '../themes/styles';
-import { BLOCK_NAME as MRC_CLASS_METHOD_DEF } from './mrc_class_method_def';
-import { BLOCK_NAME as MRC_EVENT } from './mrc_event';
 
-export const MUTATOR_BLOCK_NAME = 'methods_mutatorarg';
-export const PARAM_CONTAINER_BLOCK_NAME = 'method_param_container';
+export const PARAM_CONTAINER_BLOCK_NAME = 'mrc_param_container';
+const PARAM_ITEM_BLOCK_NAME = 'mrc_param_item';
 import { getLegalName } from './utils/python';
 
 export const setup = function () {
-  Blockly.Blocks[MUTATOR_BLOCK_NAME] = METHODS_MUTATORARG;
-  Blockly.Blocks[PARAM_CONTAINER_BLOCK_NAME] = METHOD_PARAM_CONTAINER;
+  Blockly.Blocks[PARAM_CONTAINER_BLOCK_NAME] = PARAM_CONTAINER;
+  Blockly.Blocks[PARAM_ITEM_BLOCK_NAME] = PARAM_ITEM;
 };
 
-const METHOD_PARAM_CONTAINER = {
+// The parameter container block.
+
+const INPUT_STACK = 'STACK';
+
+export type ParamContainerBlock = Blockly.Block & ParamContainerMixin;
+interface ParamContainerMixin extends ParamContainerMixinType {}
+type ParamContainerMixinType = typeof PARAM_CONTAINER;
+
+const PARAM_CONTAINER = {
   init: function (this: Blockly.Block) {
-    this.appendDummyInput("TITLE").appendField('Parameters');
-    this.appendStatementInput('STACK');
+    this.appendDummyInput().appendField(Blockly.Msg.PARAMETERS);
+    this.appendStatementInput(INPUT_STACK);
     this.setStyle(MRC_STYLE_CLASS_BLOCKS);
     this.contextMenu = false;
   },
+  getParamItemBlocks: function (this: Blockly.Block): ParamItemBlock[] {
+    const paramItemBlocks: ParamItemBlock[] = [];
+    let block = this.getInputTargetBlock(INPUT_STACK);
+    while (block && !block.isInsertionMarker()) {
+      if (block.type !== PARAM_ITEM_BLOCK_NAME) {
+       throw new Error('getItemNames: block.type should be ' + PARAM_ITEM_BLOCK_NAME);
+      }
+      paramItemBlocks.push(block as ParamItemBlock);
+      block = block.nextConnection && block.nextConnection.targetBlock();
+    }
+    return paramItemBlocks;
+  },
 };
 
-export type MethodMutatorArgBlock = Blockly.Block & MethodMutatorArgMixin & Blockly.BlockSvg;
-interface MethodMutatorArgMixin extends MethodMutatorArgMixinType {
+// The parameter item block.
+
+const FIELD_NAME = 'NAME';
+
+export type ParamItemBlock = ParamItemMixin & Blockly.BlockSvg;
+interface ParamItemMixin extends ParamItemMixinType {
   originalName: string,
 }
 
-type MethodMutatorArgMixinType = typeof METHODS_MUTATORARG;
+type ParamItemMixinType = typeof PARAM_ITEM;
 
-function setName(block: Blockly.BlockSvg) {
-  const parentBlock = ChangeFramework.getParentOfType(block, PARAM_CONTAINER_BLOCK_NAME);
-  if (parentBlock) {
-    const variableBlocks = parentBlock!.getDescendants(true)
-    const otherNames: string[] = []
-    variableBlocks?.forEach(function (variableBlock) {
-      if (variableBlock != block) {
-        otherNames.push(variableBlock.getFieldValue('NAME'));
-      }
-    });
-    const currentName = block.getFieldValue('NAME');
-    block.setFieldValue(getLegalName(currentName, otherNames), 'NAME');
-    updateMutatorFlyout(block.workspace);
-  }
-}
-
-const METHODS_MUTATORARG = {
-  init: function (this: MethodMutatorArgBlock) {
+const PARAM_ITEM = {
+  init: function (this: ParamItemBlock) {
     this.appendDummyInput()
-        .appendField(new Blockly.FieldTextInput(Blockly.Procedures.DEFAULT_ARG), 'NAME');
+        .appendField(new Blockly.FieldTextInput(''), FIELD_NAME);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setStyle(MRC_STYLE_CLASS_BLOCKS);
     this.originalName = '';
     this.contextMenu = false;
-    ChangeFramework.registerCallback(MUTATOR_BLOCK_NAME, [Blockly.Events.BLOCK_MOVE, Blockly.Events.BLOCK_CHANGE], this.onBlockChanged);
   },
-  onBlockChanged: function (block: Blockly.BlockSvg, blockEvent: Blockly.Events.BlockBase) {
-    if (blockEvent.type == Blockly.Events.BLOCK_MOVE) {
-      const blockMoveEvent = blockEvent as Blockly.Events.BlockMove;
-      if (blockMoveEvent.reason?.includes('connect')) {
-        setName(block);
-      }
-    } else {
-      if (blockEvent.type == Blockly.Events.BLOCK_CHANGE) {
-        setName(block);
-      }
+  makeNameLegal: function (this: ParamItemBlock): void {
+    const rootBlock: Blockly.Block | null = this.getRootBlock();
+    if (rootBlock) {
+      const otherNames: string[] = []
+      rootBlock!.getDescendants(true)?.forEach(itemBlock => {
+        if (itemBlock != this) {
+          otherNames.push(itemBlock.getFieldValue(FIELD_NAME));
+        }
+      });
+      const currentName = this.getFieldValue(FIELD_NAME);
+      this.setFieldValue(getLegalName(currentName, otherNames), FIELD_NAME);
+      updateMutatorFlyout(this.workspace);
     }
+  },
+  getOriginalName: function (this: ParamItemBlock): string {
+    return this.originalName;
+  },
+  setOriginalName: function (this: ParamItemBlock, originalName: string): void {
+    this.originalName = originalName;
+  },
+  getName: function (this: ParamItemBlock): string {
+    return this.getFieldValue(FIELD_NAME);
   },
 }
 
-
 /**
- * Updates the procedure mutator's flyout so that the arg block is not a
- * duplicate of another arg.
+ * Updates the mutator's flyout so that it contains a single param item block
+ * whose name is not a duplicate of an existing param item.
  *
- * @param workspace The procedure mutator's workspace. This workspace's flyout
- *     is what is being updated.
+ * @param workspace The mutator's workspace. This workspace's flyout is what is being updated.
  */
 function updateMutatorFlyout(workspace: Blockly.WorkspaceSvg) {
-  const usedNames = [];
-  const blocks = workspace.getBlocksByType(MUTATOR_BLOCK_NAME, false);
-  for (let i = 0, block; (block = blocks[i]); i++) {
-    usedNames.push(block.getFieldValue('NAME'));
-  }
-  const argValue = Blockly.Variables.generateUniqueNameFromOptions(
-      Blockly.Procedures.DEFAULT_ARG,
-      usedNames);
+  const usedNames: string[] = [];
+  workspace.getBlocksByType(PARAM_ITEM_BLOCK_NAME, false).forEach(block => {
+    usedNames.push(block.getFieldValue(FIELD_NAME));
+  });
+  const uniqueName = Blockly.Variables.generateUniqueNameFromOptions(
+      Blockly.Procedures.DEFAULT_ARG, usedNames);
   const jsonBlock = {
     kind: 'block',
-    type: MUTATOR_BLOCK_NAME,
+    type: PARAM_ITEM_BLOCK_NAME,
     fields: {
-      NAME: argValue,
+      NAME: uniqueName,
     },
   };
 
@@ -120,32 +131,60 @@ function updateMutatorFlyout(workspace: Blockly.WorkspaceSvg) {
 }
 
 /**
- * Listens for when a procedure mutator is opened. Then it triggers a flyout
- * update and adds a mutator change listener to the mutator workspace.
- *
- * @param e The event that triggered this listener.
- * @internal
+ * The blockly event listener function for the mutator's workspace.
  */
-export function mutatorOpenListener(e: Blockly.Events.Abstract) {
-  if (e.type != Blockly.Events.BUBBLE_OPEN) {
-    return;
+function onChange(mutatorWorkspace: Blockly.Workspace, event: Blockly.Events.Abstract) {
+  if (event.type === Blockly.Events.BLOCK_MOVE) {
+    const blockMoveEvent = event as Blockly.Events.BlockMove;
+    const reason: string[] = blockMoveEvent.reason ?? [];
+    if (reason.includes('connect') && blockMoveEvent.blockId) {
+      const block = mutatorWorkspace.getBlockById(blockMoveEvent.blockId);
+      if (block && block.type === PARAM_ITEM_BLOCK_NAME) {
+        (block as ParamItemBlock).makeNameLegal();
+      }
+    }
+  } else if (event.type === Blockly.Events.BLOCK_CHANGE) {
+    const blockChangeEvent = event as Blockly.Events.BlockChange;
+    if (blockChangeEvent.blockId) {
+      const block = mutatorWorkspace.getBlockById(blockChangeEvent.blockId);
+      if (block && block.type === PARAM_ITEM_BLOCK_NAME) {
+        (block as ParamItemBlock).makeNameLegal();
+      }
+    }
   }
-  const bubbleEvent = e as Blockly.Events.BubbleOpen;
-  if (!(bubbleEvent.bubbleType === 'mutator' && bubbleEvent.isOpen) ||
-      !bubbleEvent.blockId) {
-    return;
-  }
-  const workspaceId = bubbleEvent.workspaceId;
-  const block = Blockly.common
-      .getWorkspaceById(workspaceId)!
-      .getBlockById(bubbleEvent.blockId) as Blockly.BlockSvg;
+}
 
-  if (block.type !== MRC_EVENT && block.type !== MRC_CLASS_METHOD_DEF) {
-    return;
-  }
+/**
+ * Called for mrc_event and mrc_class_method_def blocks when their mutator opesn.
+ * Triggers a flyout update and adds an event listener to the mutator workspace.
+ *
+ * @param block The block whose mutator is open.
+ */
+export function onMutatorOpen(block: Blockly.BlockSvg) {
   const mutatorIcon = block.getIcon(Blockly.icons.MutatorIcon.TYPE) as Blockly.icons.MutatorIcon;
-  const workspace = mutatorIcon.getWorkspace()!;
+  const mutatorWorkspace = mutatorIcon.getWorkspace()!;
+  updateMutatorFlyout(mutatorWorkspace);
+  mutatorWorkspace.addChangeListener(event => onChange(mutatorWorkspace, event));
+}
 
-  updateMutatorFlyout(workspace);
-  ChangeFramework.setup(workspace);
+export function getFlyoutBlockTypes(): string[] {
+  return [PARAM_ITEM_BLOCK_NAME];
+}
+
+export function createMutatorBlocks(workspace: Blockly.Workspace, parameterNames: string[]): Blockly.BlockSvg {
+  // First create the container block.
+  const containerBlock = workspace.newBlock(PARAM_CONTAINER_BLOCK_NAME) as Blockly.BlockSvg;
+  containerBlock.initSvg();
+
+  // Then add one param item block for each parameter.
+  let connection = containerBlock!.getInput(INPUT_STACK)!.connection;
+  for (const parameterName of parameterNames) {
+    const itemBlock = workspace.newBlock(PARAM_ITEM_BLOCK_NAME) as ParamItemBlock;
+    itemBlock.initSvg();
+    itemBlock.setFieldValue(parameterName, FIELD_NAME);
+    itemBlock.originalName = parameterName;
+    connection!.connect(itemBlock.previousConnection!);
+    connection = itemBlock.nextConnection;
+  }
+  return containerBlock;
 }
