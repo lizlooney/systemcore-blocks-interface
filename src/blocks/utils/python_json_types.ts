@@ -84,6 +84,11 @@ export class VariableGettersAndSetters {
   tooltipsForSetter: string[] = [];
 }
 
+export class NoArgMethods {
+  methodNames: string[] = [];
+  tooltips: string[] = [];
+}
+
 export function organizeVarDataByType(vars: VarData[]): {[key: string]: VariableGettersAndSetters} {
   const varsByType: {[key: string]: VariableGettersAndSetters} = {}
   for (const varData of vars) {
@@ -102,6 +107,28 @@ export function organizeVarDataByType(vars: VarData[]): {[key: string]: Variable
     }
   }
   return varsByType;
+}
+
+export function organizeNoArgMethodsByType(instanceMethods: FunctionData[]): {[key: string]: NoArgMethods} {
+  const noArgMethodsByType: {[key: string]: NoArgMethods} = {}
+  for (const functionData of instanceMethods) {
+    if (functionData.args.length !== 1) {
+      continue;
+    }
+    if (functionData.args[0].name !== 'self') {
+      continue;
+    }
+    let noArgMethods: NoArgMethods;
+    if (functionData.returnType in noArgMethodsByType) {
+       noArgMethods = noArgMethodsByType[functionData.returnType];
+    } else {
+       noArgMethods = new NoArgMethods();
+       noArgMethodsByType[functionData.returnType] = noArgMethods;
+    }
+    noArgMethods.methodNames.push(functionData.functionName);
+    noArgMethods.tooltips.push(functionData.tooltip);
+  }
+  return noArgMethodsByType;
 }
 
 function isSuperFunction(f1: FunctionData, f2: FunctionData): boolean {
