@@ -45133,6 +45133,364 @@
             "staticMethods": []
         },
         {
+            "className": "wpilib_placeholders.Gamepad",
+            "classVariables": [],
+            "constructors": [
+                {
+                    "args": [],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "__init__",
+                    "returnType": "wpilib_placeholders.Gamepad",
+                    "tooltip": ""
+                }
+            ],
+            "enums": [],
+            "instanceMethods": [
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getBackButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getDpadDownButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getDpadLeftButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getDpadRightButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getDpadUpButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getEastFaceButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getGuideButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getLeftPaddle1Button",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getLeftPaddle2Button",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getLeftShoulderButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getLeftStickButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getMisc1Button",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getMisc2Button",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getMisc3Button",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getMisc4Button",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getMisc5Button",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getMisc6Button",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getNorthFaceButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getRightPaddle1Button",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getRightPaddle2Button",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getRightShoulderButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getRightStickButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getSouthFaceButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getStartButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getTouchpadButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "wpilib_placeholders.Gamepad"
+                        }
+                    ],
+                    "declaringClassName": "wpilib_placeholders.Gamepad",
+                    "functionName": "getWestFaceButton",
+                    "returnType": "bool",
+                    "tooltip": ""
+                }
+            ],
+            "instanceVariables": [],
+            "isComponent": false,
+            "moduleName": "wpilib_placeholders",
+            "staticMethods": []
+        },
+        {
             "className": "wpilib_placeholders.OpModeRobot",
             "classVariables": [],
             "constructors": [
@@ -80867,6 +81225,12 @@
             "enums": [],
             "functions": [],
             "moduleName": "wpilib_placeholders.expansion_hub",
+            "moduleVariables": []
+        },
+        {
+            "enums": [],
+            "functions": [],
+            "moduleName": "wpilib_placeholders.gamepad",
             "moduleVariables": []
         },
         {
