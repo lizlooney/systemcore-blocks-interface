@@ -357,11 +357,76 @@
                     "functionName": "__init__",
                     "isComponent": true,
                     "returnType": "rev.A301",
-                    "tooltip": "Create a new object to control a FIRST A301 motor\n\nThe default A301 device ID is set to 3 out of the factory.\n\n:param busId:    The CAN bus ID this device will be on.\n:param deviceId: The device ID."
+                    "tooltip": "Create a new object to control a FIRST A301 motor\n\nNOTE: If busId indicates a Motioncore bus, the device ID will be\nauto-detected and deviceId will be ignored.\n\n:param busId:    The CAN bus ID this device will be on.\n:param deviceId: The device ID."
                 }
             ],
-            "enums": [],
+            "enums": [
+                {
+                    "enumClassName": "rev.A301.GearboxRPM",
+                    "enumValues": [
+                        "kRPM_215",
+                        "kRPM_500",
+                        "kRPM_Unknown"
+                    ],
+                    "moduleName": "rev",
+                    "tooltip": "Members:\n\n  kRPM_Unknown\n\n  kRPM_215\n\n  kRPM_500"
+                }
+            ],
             "instanceMethods": [
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "period_ms",
+                            "type": "int"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "absoluteEncoderPositionPeriodMs",
+                    "returnType": "rev.A301",
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby GetAbsoluteEncoderPosition().\n\nThe default period is 20ms.\nThe maximum period is 1000ms (1s).\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param period_ms: The period in milliseconds\n\n:returns: The modified A301 object for method chaining"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "period_ms",
+                            "type": "int"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "appliedOutputPeriodMs",
+                    "returnType": "rev.A301",
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby GetAppliedOutput().\n\nThe default period is 10ms.\nThe maximum period is 1000ms (1s).\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param period_ms: The period in milliseconds\n\n:returns: The modified A301 object for method chaining"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "period_ms",
+                            "type": "int"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "busVoltagePeriodMs",
+                    "returnType": "rev.A301",
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby GetBusVoltage().\n\nThe default period is 10ms.\nThe maximum period is 1000ms (1s).\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param period_ms: The period in milliseconds\n\n:returns: The modified A301 object for method chaining"
+                },
                 {
                     "args": [
                         {
@@ -397,6 +462,68 @@
                         }
                     ],
                     "declaringClassName": "rev.A301",
+                    "functionName": "disableAbsolutePositionContinuousInput",
+                    "returnType": "rev.REVLibError",
+                    "tooltip": "Disables continuous input for absolute position control.\n\n:returns: REVLibError::kOk if successful"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "enableAbsolutePositionContinuousInput",
+                    "returnType": "rev.REVLibError",
+                    "tooltip": "Enables continuous input for absolute position control.\n\n:returns: REVLibError::kOk if successful"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "period_ms",
+                            "type": "int"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "encoderVelocityPeriodMs",
+                    "returnType": "rev.A301",
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby GetEncoderVelocity().\n\nThe default period is 20ms.\nThe maximum period is 1000ms (1s).\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param period_ms: The period in milliseconds\n\n:returns: The modified A301 object for method chaining"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "period_ms",
+                            "type": "int"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "faultsPeriodMs",
+                    "returnType": "rev.A301",
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby GetFaults() and GetStickyFaults().\n\nThe default period is 50ms.\nThe maximum period is 1000ms (1s).\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param period_ms: The period in milliseconds\n\n:returns: The modified A301 object for method chaining"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
                     "functionName": "getAbsoluteEncoderPosition",
                     "isCommon": true,
                     "returnType": "rev.Signal_double",
@@ -411,9 +538,35 @@
                         }
                     ],
                     "declaringClassName": "rev.A301",
+                    "functionName": "getAbsoluteEncoderPositionPeriodMs",
+                    "returnType": "int",
+                    "tooltip": "Get the period (ms) of the status frame that provides the signal returned\nby GetAbsoluteEncoderPosition().\n\n:returns: The period in milliseconds"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
                     "functionName": "getAppliedOutput",
                     "returnType": "rev.Signal_double",
                     "tooltip": "Returns the A301's output duty cycle.\n\n:returns: Signal containing the applied output duty cycle"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "getAppliedOutputPeriodMs",
+                    "returnType": "int",
+                    "tooltip": "Get the period (ms) of the status frame that provides the signal returned\nby GetAppliedOutput().\n\n:returns: The period in milliseconds"
                 },
                 {
                     "args": [
@@ -440,6 +593,19 @@
                     "functionName": "getBusVoltage",
                     "returnType": "rev.Signal_double",
                     "tooltip": "Returns the voltage fed into the A301.\n\n:returns: Signal containing the bus voltage"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "getBusVoltagePeriodMs",
+                    "returnType": "int",
+                    "tooltip": "Get the period (ms) of the status frame that provides the signal returned\nby GetBusVoltage().\n\n:returns: The period in milliseconds"
                 },
                 {
                     "args": [
@@ -477,9 +643,35 @@
                         }
                     ],
                     "declaringClassName": "rev.A301",
+                    "functionName": "getEncoderVelocityPeriodMs",
+                    "returnType": "int",
+                    "tooltip": "Get the period (ms) of the status frame that provides the signal returned\nby GetEncoderVelocity().\n\n:returns: The period in milliseconds"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
                     "functionName": "getFaults",
                     "returnType": "rev.Signal_A301Faults",
                     "tooltip": "Get the active faults that are currently present on the A301. Faults\nare fatal errors that prevent the motor from running.\n\n:returns: Signal containing each fault and their active value"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "getFaultsPeriodMs",
+                    "returnType": "int",
+                    "tooltip": "Get the period (ms) of the status frame that provides the signal returned\nby GetFaults() and GetStickyFaults().\n\n:returns: The period in milliseconds"
                 },
                 {
                     "args": [
@@ -504,8 +696,8 @@
                     ],
                     "declaringClassName": "rev.A301",
                     "functionName": "getFirmwareVersion",
-                    "returnType": "int",
-                    "tooltip": "Get the firmware version of the FIRST A301.\n\n:returns: uint32_t Firmware version integer. Value is represented as 4\n          bytes, Major.Minor.Build H.Build L"
+                    "returnType": "rev.A301.FirmwareVersion",
+                    "tooltip": "Get the firmware version of the FIRST A301.\n\n:returns: FirmwareVersion"
                 },
                 {
                     "args": [
@@ -516,9 +708,9 @@
                         }
                     ],
                     "declaringClassName": "rev.A301",
-                    "functionName": "getFirmwareVersion",
-                    "returnType": "tuple[int, bool]",
-                    "tooltip": ""
+                    "functionName": "getGearboxRPM",
+                    "returnType": "rev._rev.Signal_A301GearboxRPM",
+                    "tooltip": "Returns the RPM of the A301's attached gearbox.\n\n:returns: Signal containing the gearbox RPM (@see GearboxRPM)"
                 },
                 {
                     "args": [
@@ -555,9 +747,35 @@
                         }
                     ],
                     "declaringClassName": "rev.A301",
+                    "functionName": "getMotorCurrentPeriodMs",
+                    "returnType": "int",
+                    "tooltip": "Get the period (ms) of the status frame that provides the signal returned\nby GetMotorCurrent().\n\n:returns: The period in milliseconds"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
                     "functionName": "getMotorTemperature",
                     "returnType": "rev.Signal_double",
                     "tooltip": "Returns the motor temperature in Celsius.\n\n:returns: Signal containing the motor temperature in Celsius"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "getMotorTemperaturePeriodMs",
+                    "returnType": "int",
+                    "tooltip": "Get the period (ms) of the status frame that provides the signal returned\nby GetMotorTemperature().\n\n:returns: The period in milliseconds"
                 },
                 {
                     "args": [
@@ -572,6 +790,19 @@
                     "isCommon": true,
                     "returnType": "rev.Signal_double",
                     "tooltip": "Get the position of the motor. This returns the native units\nof 'rotations'.\n\n:returns: Signal containing the number of rotations of the motor"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "getRelativeEncoderPositionPeriodMs",
+                    "returnType": "int",
+                    "tooltip": "Get the period (ms) of the status frame that provides the signal returned\nby GetRelativeEncoderPosition().\n\n:returns: The period in milliseconds"
                 },
                 {
                     "args": [
@@ -635,6 +866,19 @@
                         }
                     ],
                     "declaringClassName": "rev.A301",
+                    "functionName": "getWarningsPeriodMs",
+                    "returnType": "int",
+                    "tooltip": "Get the period (ms) of the status frame that provides the signal returned\nby GetWarnings() and GetStickyWarnings().\n\n:returns: The period in milliseconds"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
                     "functionName": "hasActiveFault",
                     "returnType": "rev.Signal_bool",
                     "tooltip": ""
@@ -684,6 +928,110 @@
                             "defaultValue": "",
                             "name": "self",
                             "type": "rev.A301"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "isAbsolutePositionContinuousInputEnabled",
+                    "returnType": "bool",
+                    "tooltip": "Queries the continuous input for absolute position control.\n\n:returns: true if continuous input is enabled."
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "period_ms",
+                            "type": "int"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "motorCurrentPeriodMs",
+                    "returnType": "rev.A301",
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby GetMotorCurrent().\n\nThe default period is 10ms.\nThe maximum period is 1000ms (1s).\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param period_ms: The period in milliseconds\n\n:returns: The modified A301 object for method chaining"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "period_ms",
+                            "type": "int"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "motorTemperaturePeriodMs",
+                    "returnType": "rev.A301",
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby GetMotorTemperature().\n\nThe default period is 10ms.\nThe maximum period is 1000ms (1s).\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param period_ms: The period in milliseconds\n\n:returns: The modified A301 object for method chaining"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "period_ms",
+                            "type": "int"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "relativeEncoderPositionPeriodMs",
+                    "returnType": "rev.A301",
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby GetRelativeEncoderPosition().\n\nThe default period is 20ms.\nThe maximum period is 1000ms (1s).\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param period_ms: The period in milliseconds\n\n:returns: The modified A301 object for method chaining"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "position",
+                            "type": "float"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "setAbsoluteEncoderPosition",
+                    "returnType": "rev.REVLibError",
+                    "tooltip": "Set the position of the absolute encoder.\n\n:param position: Number of rotations of the motor\n\n:returns: REVLibError::kOk if successful"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "absPosition",
+                            "type": "float"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "setAbsolutePosition",
+                    "isCommon": true,
+                    "returnType": "rev.REVLibError",
+                    "tooltip": "Sets the absolute position of the A301 (with maximum speed).\n\n:param absPosition: The absolute position (-0.5 to 0.5) to set\n\n:returns: REVLibError::kOk if successful"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
                         },
                         {
                             "defaultValue": "",
@@ -692,15 +1040,14 @@
                         },
                         {
                             "defaultValue": "",
-                            "name": "isContinuous",
-                            "type": "bool"
+                            "name": "speed",
+                            "type": "float"
                         }
                     ],
                     "declaringClassName": "rev.A301",
-                    "functionName": "setAbsolutePosition",
-                    "isCommon": true,
+                    "functionName": "setAbsolutePositionWithSpeed",
                     "returnType": "rev.REVLibError",
-                    "tooltip": "Sets the absolute position of the A301 with optional continuous rotation.\n\n:param absPosition:  The absolute position (-0.5 to 0.5) to set\n:param isContinuous: Should the position flip when it reaches an endpoint?\n\n:returns: REVLibError::kOk if successful"
+                    "tooltip": "Sets the absolute position of the A301 with a specific speed.\n\nSetting speed <= 0 will apply maximum speed)\n\n:param absPosition: The absolute position (-0.5 to 0.5) to set\n:param speed:       The speed to approach the position at (in RPM)\n\n:returns: REVLibError::kOk if successful"
                 },
                 {
                     "args": [
@@ -753,10 +1100,10 @@
                         }
                     ],
                     "declaringClassName": "rev.A301",
-                    "functionName": "setPosition",
+                    "functionName": "setRelativeEncoderPosition",
                     "isCommon": true,
                     "returnType": "rev.REVLibError",
-                    "tooltip": "Sets the relative position of the A301.\n\n:param position: The relative position (in Rotations) to set\n\n:returns: REVLibError::kOk if successful"
+                    "tooltip": "Set the position of the relative encoder.\n\n:param position: Number of rotations of the motor\n\n:returns: REVLibError::kOk if successful"
                 },
                 {
                     "args": [
@@ -772,10 +1119,32 @@
                         }
                     ],
                     "declaringClassName": "rev.A301",
-                    "functionName": "setRelativeEncoderPosition",
-                    "isCommon": true,
+                    "functionName": "setRelativePosition",
                     "returnType": "rev.REVLibError",
-                    "tooltip": "Set the position of the relative encoder.\n\n:param position: Number of rotations of the motor\n\n:returns: REVLibError::kOk if successful"
+                    "tooltip": "Sets the relative position of the A301 (with maximum speed).\n\n:param position: The relative position (in Rotations) to set\n\n:returns: REVLibError::kOk if successful"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "position",
+                            "type": "float"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "speed",
+                            "type": "float"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "setRelativePositionWithSpeed",
+                    "returnType": "rev.REVLibError",
+                    "tooltip": "Sets the relative position of the A301 with a specific speed.\n\n:param position: The relative position (in Rotations) to set\n:param speed:    The speed to approach the position at (in RPM)\n\n:returns: REVLibError::kOk if successful"
                 },
                 {
                     "args": [
@@ -832,6 +1201,24 @@
                     "functionName": "setVoltage",
                     "returnType": "None",
                     "tooltip": "Sets the voltage output of the SpeedController. The behavior of\nthis call differs slightly from the WPILib documentation for this call\nsince the device internally sets the desired voltage (not a\ncompensation value). That means that this *can* be a 'set-and-forget'\ncall.\n\n:param output: The voltage to output. (-12.0 V to 12.0 V)"
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "self",
+                            "type": "rev.A301"
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "period_ms",
+                            "type": "int"
+                        }
+                    ],
+                    "declaringClassName": "rev.A301",
+                    "functionName": "warningsPeriodMs",
+                    "returnType": "rev.A301",
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby GetWarnings() and GetStickyWarnings().\n\nThe default period is 50ms.\nThe maximum period is 1000ms (1s).\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param period_ms: The period in milliseconds\n\n:returns: The modified A301 object for method chaining"
                 }
             ],
             "instanceVariables": [],
@@ -892,7 +1279,7 @@
                     "writable": true
                 },
                 {
-                    "name": "motorType",
+                    "name": "motorStartup",
                     "tooltip": "",
                     "type": "bool",
                     "writable": true
@@ -919,6 +1306,50 @@
                     "name": "temperature",
                     "tooltip": "",
                     "type": "bool",
+                    "writable": true
+                }
+            ],
+            "isComponent": false,
+            "moduleName": "rev",
+            "staticMethods": []
+        },
+        {
+            "className": "rev.A301.FirmwareVersion",
+            "classVariables": [],
+            "constructors": [
+                {
+                    "args": [],
+                    "declaringClassName": "rev.A301.FirmwareVersion",
+                    "functionName": "__init__",
+                    "returnType": "rev.A301.FirmwareVersion",
+                    "tooltip": ""
+                }
+            ],
+            "enums": [],
+            "instanceMethods": [],
+            "instanceVariables": [
+                {
+                    "name": "major",
+                    "tooltip": "",
+                    "type": "int",
+                    "writable": true
+                },
+                {
+                    "name": "minor",
+                    "tooltip": "",
+                    "type": "int",
+                    "writable": true
+                },
+                {
+                    "name": "patch",
+                    "tooltip": "",
+                    "type": "int",
+                    "writable": true
+                },
+                {
+                    "name": "prerelease",
+                    "tooltip": "",
+                    "type": "int",
                     "writable": true
                 }
             ],
@@ -979,6 +1410,12 @@
                     "writable": true
                 },
                 {
+                    "name": "motorLoopSpeed",
+                    "tooltip": "",
+                    "type": "bool",
+                    "writable": true
+                },
+                {
                     "name": "other",
                     "tooltip": "",
                     "type": "bool",
@@ -986,6 +1423,12 @@
                 },
                 {
                     "name": "overcurrent",
+                    "tooltip": "",
+                    "type": "bool",
+                    "writable": true
+                },
+                {
+                    "name": "overvoltage",
                     "tooltip": "",
                     "type": "bool",
                     "writable": true
@@ -2497,44 +2940,6 @@
                         },
                         {
                             "defaultValue": "",
-                            "name": "p",
-                            "type": "float"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "i",
-                            "type": "float"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "d",
-                            "type": "float"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "ff",
-                            "type": "float"
-                        },
-                        {
-                            "defaultValue": "<ClosedLoopSlot.kSlot0: 0>",
-                            "name": "slot",
-                            "type": "rev.ClosedLoopSlot"
-                        }
-                    ],
-                    "declaringClassName": "rev.ClosedLoopConfig",
-                    "functionName": "pidf",
-                    "returnType": "rev.ClosedLoopConfig",
-                    "tooltip": "Set the PIDF gains of the controller for a specific closed loop slot.\n\n:deprecated: Use FeedForwardConfig::V(double v, ClosedLoopSlot slot) to\n             set a Velocity Feedforward\n\n:param p:    The proportional gain value\n:param i:    The integral gain value\n:param d:    The derivative gain value\n:param ff:   The velocity feedforward value\n:param slot: The closed loop slot to set the values for\n\n:returns: The modified ClosedLoopConfig object for method chaining"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.ClosedLoopConfig"
-                        },
-                        {
-                            "defaultValue": "",
                             "name": "enabled",
                             "type": "bool"
                         }
@@ -2666,29 +3071,6 @@
                     "functionName": "setFeedbackSensor",
                     "returnType": "rev.ClosedLoopConfig",
                     "tooltip": "Set an external CAN Detached Encoder as the feedback sensor of the\ncontroller. The controller will use this sensor as the source of feedback\nfor its closed loop control.\n\nTo set an attached encoder, use the SetFeedbackSensor(FeedbackSensor)\nmethod instead. This method will ignore @c sensor set to an attached\nsensor.\n\n:param sensor: The detached feedback sensor\n               @splineEncoder The detached CAN encoder to use\n\n:returns: The modified ClosedLoopConfig object for method chaining"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.ClosedLoopConfig"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "ff",
-                            "type": "float"
-                        },
-                        {
-                            "defaultValue": "<ClosedLoopSlot.kSlot0: 0>",
-                            "name": "slot",
-                            "type": "rev.ClosedLoopSlot"
-                        }
-                    ],
-                    "declaringClassName": "rev.ClosedLoopConfig",
-                    "functionName": "velocityFF",
-                    "returnType": "rev.ClosedLoopConfig",
-                    "tooltip": "Set the velocity feedforward gain of the controller for a specific closed\nloop slot.\n\n:deprecated: Use FeedForwardConfig::V(double v, ClosedLoopSlot slot) to\n             set this gain\n\n:param ff:   The velocity feedforward gain value\n:param slot: The closed loop slot to set the values for\n\n:returns: The modified ClosedLoopConfig object for method chaining"
                 }
             ],
             "instanceVariables": [
@@ -2787,24 +3169,6 @@
                     "functionName": "getDFilter",
                     "returnType": "float",
                     "tooltip": ""
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.ClosedLoopConfigAccessor"
-                        },
-                        {
-                            "defaultValue": "<ClosedLoopSlot.kSlot0: 0>",
-                            "name": "slot",
-                            "type": "rev.ClosedLoopSlot"
-                        }
-                    ],
-                    "declaringClassName": "rev.ClosedLoopConfigAccessor",
-                    "functionName": "getFF",
-                    "returnType": "float",
-                    "tooltip": ":deprecated: Use FeedForwardConfigAccessor::GetV instead"
                 },
                 {
                     "args": [
@@ -6055,7 +6419,7 @@
                     "declaringClassName": "rev.FeedForwardConfig",
                     "functionName": "scr",
                     "returnType": "rev.FeedForwardConfig",
-                    "tooltip": "Set the kS, kCos, and kCosRatio gains for the provided slot in one call.\n\nFor more information on the kS, kCos, and kCosRatio gains, see {@link\nFeedForwardConfig#kS(double)},\n:meth:`.FeedForwardConfig.kCos`, and {@link\nFeedForwardConfig#kCosRatio(double)}.\n\n:param kS:        The kS gain in Volts\n:param kCos:      The kCos gain in Volts\n:param kCosRatio: The ratio used to calculate the absolute position of\n                  your arm mechanism for use with kCos\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
+                    "tooltip": "Set the kS, kCos, and kCosRatio gains for the provided slot in one call.\n\nFor more information on the kS, kCos, and kCosRatio gains, see {@link\nFeedForwardConfig#kS(double, ClosedLoopSlot)},\n:meth:`.FeedForwardConfig.kCos`, and {@link\nFeedForwardConfig#kCosRatio(double, ClosedLoopSlot)}.\n\n:param kS:        The kS gain in Volts\n:param kCos:      The kCos gain in Volts\n:param kCosRatio: The ratio used to calculate the absolute position of\n                  your arm mechanism for use with kCos\n:param slot:      The closed loop slot to set the values for\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
                 },
                 {
                     "args": [
@@ -6083,7 +6447,7 @@
                     "declaringClassName": "rev.FeedForwardConfig",
                     "functionName": "sg",
                     "returnType": "rev.FeedForwardConfig",
-                    "tooltip": "Set the kS and kG gains for the provided slot in one call.\n\nFor more information on the kS and kG gains, see {@link\nFeedForwardConfig#kS(double)} and\n:meth:`.FeedForwardConfig.kG`.\n\n:param kS: The kS gain in Volts\n:param kG: The kG gain in Volts\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
+                    "tooltip": "Set the kS and kG gains for the provided slot in one call.\n\nFor more information on the kS and kG gains, see {@link\nFeedForwardConfig#kS(double, ClosedLoopSlot)} and\n:meth:`.FeedForwardConfig.kG`.\n\n:param kS:   The kS gain in Volts\n:param kG:   The kG gain in Volts\n:param slot: The closed loop slot to set the values for\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
                 },
                 {
                     "args": [
@@ -6111,7 +6475,7 @@
                     "declaringClassName": "rev.FeedForwardConfig",
                     "functionName": "sv",
                     "returnType": "rev.FeedForwardConfig",
-                    "tooltip": "Set the kS and kV gains for the provided slot in one call.\n\nFor more information on the kS and kV gains, see {@link\nFeedForwardConfig#kS(double)} and\n:meth:`.FeedForwardConfig.kV`.\n\n:param kS: The kS gain in Volts\n:param kV: The kV gain in Volts per velocity\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
+                    "tooltip": "Set the kS and kV gains for the provided slot in one call.\n\nFor more information on the kS and kV gains, see {@link\nFeedForwardConfig#kS(double, ClosedLoopSlot)} and\n:meth:`.FeedForwardConfig.kV`.\n\n:param kS:   The kS gain in Volts\n:param kV:   The kV gain in Volts per velocity\n:param slot: The closed loop slot to set the values for\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
                 },
                 {
                     "args": [
@@ -6144,7 +6508,7 @@
                     "declaringClassName": "rev.FeedForwardConfig",
                     "functionName": "sva",
                     "returnType": "rev.FeedForwardConfig",
-                    "tooltip": "Set the kS, kV, and kA gains for the provided slot in one call.\n\nFor more information on the kS, kV, and kA gains, see {@link\nFeedForwardConfig#kS(double)},\n:meth:`.FeedForwardConfig.kV`, and {@link\nFeedForwardConfig#kA(double)}.\n\n:param kS: The kS gain in Volts\n:param kV: The kV gain in Volts per velocity\n:param kA: The kA gain in Volts per velocity per second\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
+                    "tooltip": "Set the kS, kV, and kA gains for the provided slot in one call.\n\nFor more information on the kS, kV, and kA gains, see {@link\nFeedForwardConfig#kS(double, ClosedLoopSlot)},\n:meth:`.FeedForwardConfig.kV`, and {@link\nFeedForwardConfig#kA(double, ClosedLoopSlot)}.\n\n:param kS:   The kS gain in Volts\n:param kV:   The kV gain in Volts per velocity\n:param kA:   The kA gain in Volts per velocity per second\n:param slot: The closed loop slot to set the values for\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
                 },
                 {
                     "args": [
@@ -6187,7 +6551,7 @@
                     "declaringClassName": "rev.FeedForwardConfig",
                     "functionName": "svacr",
                     "returnType": "rev.FeedForwardConfig",
-                    "tooltip": "Set the kS, kV, kA, kCos, and kCosRatio gains for the provided slot in\none call.\n\nFor more information on the kS, kV, kA, kCos, and kCosRatio gains, see\n:meth:`.FeedForwardConfig.kS`, {@link\nFeedForwardConfig#kV(double)}, :meth:`.FeedForwardConfig.kA`,\n:meth:`.FeedForwardConfig.kCos`, and {@link\nFeedForwardConfig#kCosRatio(double)}.\n\n:param kS:        The kS gain in Volts\n:param kV:        The kV gain in Volts per velocity\n:param kA:        The kA gain in Volts per velocity per second\n:param kCos:      The kCos gain in Volts\n:param kCosRatio: The ratio used to calculate the absolute position of\n                  your arm mechanism for use with kCos\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
+                    "tooltip": "Set the kS, kV, kA, kCos, and kCosRatio gains for the provided slot in\none call.\n\nFor more information on the kS, kV, kA, kCos, and kCosRatio gains, see\n:meth:`.FeedForwardConfig.kS`, {@link\nFeedForwardConfig#kV(double, ClosedLoopSlot)},\n:meth:`.FeedForwardConfig.kA`,\n:meth:`.FeedForwardConfig.kCos`, and {@link\nFeedForwardConfig#kCosRatio(double, ClosedLoopSlot)}.\n\n:param kS:        The kS gain in Volts\n:param kV:        The kV gain in Volts per velocity\n:param kA:        The kA gain in Volts per velocity per second\n:param kCos:      The kCos gain in Volts\n:param kCosRatio: The ratio used to calculate the absolute position of\n                  your arm mechanism for use with kCos\n:param slot:      The closed loop slot to set the values for\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
                 },
                 {
                     "args": [
@@ -6225,7 +6589,7 @@
                     "declaringClassName": "rev.FeedForwardConfig",
                     "functionName": "svag",
                     "returnType": "rev.FeedForwardConfig",
-                    "tooltip": "Set the kS, kV, kA, and kG gains for the provided slot in one call.\n\nFor more information on the kS, kV, kA, and kG gains, see {@link\nFeedForwardConfig#kS(double)},\n:meth:`.FeedForwardConfig.kV`, {@link\nFeedForwardConfig#kA(double)}, and\n:meth:`.FeedForwardConfig.kG`.\n\n:param kS: The kS gain in Volts\n:param kV: The kV gain in Volts per velocity\n:param kA: The kA gain in Volts per velocity per second\n:param kG: The kG gain in Volts\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
+                    "tooltip": "Set the kS, kV, kA, and kG gains for the provided slot in one call.\n\nFor more information on the kS, kV, kA, and kG gains, see {@link\nFeedForwardConfig#kS(double, ClosedLoopSlot)},\n:meth:`.FeedForwardConfig.kV`, {@link\nFeedForwardConfig#kA(double, ClosedLoopSlot)}, and\n:meth:`.FeedForwardConfig.kG`.\n\n:param kS:   The kS gain in Volts\n:param kV:   The kV gain in Volts per velocity\n:param kA:   The kA gain in Volts per velocity per second\n:param kG:   The kG gain in Volts\n:param slot: The closed loop slot to set the values for\n\n:returns: The modified :class:`.FeedForwardConfig` object for method chaining"
                 }
             ],
             "instanceVariables": [],
@@ -6447,24 +6811,6 @@
                         },
                         {
                             "defaultValue": "",
-                            "name": "enabled",
-                            "type": "bool"
-                        }
-                    ],
-                    "declaringClassName": "rev.LimitSwitchConfig",
-                    "functionName": "forwardLimitSwitchEnabled",
-                    "returnType": "rev.LimitSwitchConfig",
-                    "tooltip": "Set whether to enable/disable motor shutdown based on the forward\nlimit switch state.\nThis does not not affect the result of the isPressed() command.\n\n:deprecated: Use\n             LimitSwitchConfig::ForwardLimitSwitchTriggerBehavior(Behavior) instead\n\n:param enabled: True for halting the motor when triggered\n\n:returns: The modified LimitSwitchConfig object for method chaining"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.LimitSwitchConfig"
-                        },
-                        {
-                            "defaultValue": "",
                             "name": "position",
                             "type": "float"
                         }
@@ -6527,24 +6873,6 @@
                     "functionName": "limitSwitchPositionSensor",
                     "returnType": "rev.LimitSwitchConfig",
                     "tooltip": "Specifies the feedback sensor that the triggered position value is\nset on. This applies for both forward and reverse limit switches.\n\n:param sensor: The feedback sensor to set the position value on\n\n:returns: The modified LimitSwitchConfig object for method chaining"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.LimitSwitchConfig"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "enabled",
-                            "type": "bool"
-                        }
-                    ],
-                    "declaringClassName": "rev.LimitSwitchConfig",
-                    "functionName": "reverseLimitSwitchEnabled",
-                    "returnType": "rev.LimitSwitchConfig",
-                    "tooltip": "Set whether to enable/disable motor shutdown based on the reverse\nlimit switch state.\nThis does not not affect the result of the isPressed() command.\n\n:deprecated: Use\n             LimitSwitchConfig::ReverseLimitSwitchTriggerBehavior(Behavior) instead\n\n:param enabled: True for halting the motor when triggered\n\n:returns: The modified LimitSwitchConfig object for method chaining"
                 },
                 {
                     "args": [
@@ -6653,19 +6981,6 @@
                         }
                     ],
                     "declaringClassName": "rev.LimitSwitchConfigAccessor",
-                    "functionName": "getForwardLimitSwitchEnabled",
-                    "returnType": "bool",
-                    "tooltip": ""
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.LimitSwitchConfigAccessor"
-                        }
-                    ],
-                    "declaringClassName": "rev.LimitSwitchConfigAccessor",
                     "functionName": "getForwardLimitSwitchPosition",
                     "returnType": "float",
                     "tooltip": ""
@@ -6694,19 +7009,6 @@
                     "declaringClassName": "rev.LimitSwitchConfigAccessor",
                     "functionName": "getForwardSwitchType",
                     "returnType": "rev.LimitSwitchConfig.Type",
-                    "tooltip": ""
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.LimitSwitchConfigAccessor"
-                        }
-                    ],
-                    "declaringClassName": "rev.LimitSwitchConfigAccessor",
-                    "functionName": "getReverseLimitSwitchEnabled",
-                    "returnType": "bool",
                     "tooltip": ""
                 },
                 {
@@ -6777,29 +7079,6 @@
                 }
             ],
             "instanceMethods": [
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.MAXMotionConfig"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "allowedError",
-                            "type": "float"
-                        },
-                        {
-                            "defaultValue": "<ClosedLoopSlot.kSlot0: 0>",
-                            "name": "slot",
-                            "type": "rev.ClosedLoopSlot"
-                        }
-                    ],
-                    "declaringClassName": "rev.MAXMotionConfig",
-                    "functionName": "allowedClosedLoopError",
-                    "returnType": "rev.MAXMotionConfig",
-                    "tooltip": "Set the allowed profile error for the MAXMotion mode of the controller\nfor a specific PID slot. This value is how much deviation from the\nprofile is tolerated before the profile is regenerated. Natively, the\nunits are in rotations but will be affected by the position conversion\nfactor.\n\n:deprecated: Use MAXMotionConfig::AllowedProfileError instead\n\n:param allowedError: The allowed error with the position conversion factor\n                     applied\n:param slot:         The closed loop slot to set the values for\n\n:returns: The modified MAXMotionConfig object for method chaining"
-                },
                 {
                     "args": [
                         {
@@ -6909,29 +7188,6 @@
                         },
                         {
                             "defaultValue": "",
-                            "name": "maxVelocity",
-                            "type": "float"
-                        },
-                        {
-                            "defaultValue": "<ClosedLoopSlot.kSlot0: 0>",
-                            "name": "slot",
-                            "type": "rev.ClosedLoopSlot"
-                        }
-                    ],
-                    "declaringClassName": "rev.MAXMotionConfig",
-                    "functionName": "maxVelocity",
-                    "returnType": "rev.MAXMotionConfig",
-                    "tooltip": "Set the cruise velocity for the MAXMotion mode of the controller for a\nspecific closed loop slot. Natively, the units are in RPM but will be\naffected by the velocity conversion factor.\n\n:deprecated: Use MAXMotionConfig::CruiseVelocity instead\n\n:param maxVelocity: The maximum velocity with the velocity conversion\n                    factor applied\n:param slot:        The closed loop slot to set the values for\n\n:returns: The modified MAXMotionConfig object for method chaining"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.MAXMotionConfig"
-                        },
-                        {
-                            "defaultValue": "",
                             "name": "mode",
                             "type": "rev.MAXMotionConfig.MAXMotionPositionMode"
                         },
@@ -6991,24 +7247,6 @@
                         }
                     ],
                     "declaringClassName": "rev.MAXMotionConfigAccessor",
-                    "functionName": "getAllowedClosedLoopError",
-                    "returnType": "float",
-                    "tooltip": ":deprecated: Use GetAllowedProfileError instead"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.MAXMotionConfigAccessor"
-                        },
-                        {
-                            "defaultValue": "<ClosedLoopSlot.kSlot0: 0>",
-                            "name": "slot",
-                            "type": "rev.ClosedLoopSlot"
-                        }
-                    ],
-                    "declaringClassName": "rev.MAXMotionConfigAccessor",
                     "functionName": "getAllowedProfileError",
                     "returnType": "float",
                     "tooltip": ""
@@ -7048,24 +7286,6 @@
                     "functionName": "getMaxAcceleration",
                     "returnType": "float",
                     "tooltip": ""
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.MAXMotionConfigAccessor"
-                        },
-                        {
-                            "defaultValue": "<ClosedLoopSlot.kSlot0: 0>",
-                            "name": "slot",
-                            "type": "rev.ClosedLoopSlot"
-                        }
-                    ],
-                    "declaringClassName": "rev.MAXMotionConfigAccessor",
-                    "functionName": "getMaxVelocity",
-                    "returnType": "float",
-                    "tooltip": ":deprecated: Use GetCruiseVelocity instead"
                 },
                 {
                     "args": [
@@ -7739,29 +7959,6 @@
                         {
                             "defaultValue": "<ResetMode.kNoResetSafeParameters: 0>",
                             "name": "resetMode",
-                            "type": "rev.ServoHub.ResetMode"
-                        }
-                    ],
-                    "declaringClassName": "rev.ServoHub",
-                    "functionName": "configure",
-                    "returnType": "rev.REVLibError",
-                    "tooltip": "Set the configuration for the ServoHub.\n\nIf @c resetMode is ResetMode::kResetSafeParameters, this\nmethod will reset safe writable parameters to their default values before\nsetting the given configuration.\n\n:deprecated: Use :meth:`.Configure`\n             instead. This method will be removed in 2027.\n\n:param config:    The desired ServoHub configuration\n:param resetMode: Whether to reset safe parameters before setting the\n                  configuration\n\n:returns: REVLibError::kOk if successful"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.ServoHub"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "config",
-                            "type": "rev.ServoHubConfig"
-                        },
-                        {
-                            "defaultValue": "<ResetMode.kNoResetSafeParameters: 0>",
-                            "name": "resetMode",
                             "type": "rev.ResetMode"
                         }
                     ],
@@ -7769,29 +7966,6 @@
                     "functionName": "configure",
                     "returnType": "rev.REVLibError",
                     "tooltip": "Set the configuration for the ServoHub.\n\nIf @c resetMode is ResetMode::kResetSafeParameters, this\nmethod will reset safe writable parameters to their default values before\nsetting the given configuration.\n\n:param config:    The desired ServoHub configuration\n:param resetMode: Whether to reset safe parameters before setting the\n                  configuration\n\n:returns: REVLibError::kOk if successful"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.ServoHub"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "config",
-                            "type": "rev.ServoHubConfig"
-                        },
-                        {
-                            "defaultValue": "<ResetMode.kNoResetSafeParameters: 0>",
-                            "name": "resetMode",
-                            "type": "rev.ServoHub.ResetMode"
-                        }
-                    ],
-                    "declaringClassName": "rev.ServoHub",
-                    "functionName": "configureAsync",
-                    "returnType": "rev.REVLibError",
-                    "tooltip": "Set the configuration for the ServoHub without waiting for a response.\n\nIf @c resetMode is ResetMode::kResetSafeParameters, this\nmethod will reset safe writable parameters to their default values before\nsetting the given configuration.\n\nNOTE: This method will immediately return REVLibError::kOk and\nthe action will be done in the background. Any errors that occur will be\nreported to the driver station.\n\n:deprecated: Use :meth:`.ConfigureAsync`\n             instead. This method will be removed in 2027.\n\n:param config:    The desired ServoHub configuration\n:param resetMode: Whether to reset safe parameters before setting the\n                  configuration\n\n:returns: REVLibError::kOk\n          @see Configure()"
                 },
                 {
                     "args": [
@@ -13113,24 +13287,6 @@
                         },
                         {
                             "defaultValue": "",
-                            "name": "enabled",
-                            "type": "bool"
-                        }
-                    ],
-                    "declaringClassName": "rev.SignalsConfig",
-                    "functionName": "appliedOutputAlwaysOn",
-                    "returnType": "rev.SignalsConfig",
-                    "tooltip": "Set whether to always enable the status frame that provides the signal\nreturned by SparkBase::GetAppliedOutput().\n\nStatus frames are only enabled when a signal is requested via its\nrespective getter method, and there may be a small period of time where\nthe signal's data is unavailable due to waiting for the SPARK to receive\nthe command to enable the status frame. Use this method to enable the\nstatus frame at all times.\n\nIf multiple alwaysOn values are set for signals within the same status\nframe, the result from OR'ing the values will be used.\n\n:deprecated: Calling this method will have no effect, as status 0 cannot\n             be disabled.\n\n:param enabled: True to always enable the status frame\n\n:returns: The modified SignalsConfig object for method chaining"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.SignalsConfig"
-                        },
-                        {
-                            "defaultValue": "",
                             "name": "periodMs",
                             "type": "int"
                         }
@@ -13167,24 +13323,6 @@
                         },
                         {
                             "defaultValue": "",
-                            "name": "enabled",
-                            "type": "bool"
-                        }
-                    ],
-                    "declaringClassName": "rev.SignalsConfig",
-                    "functionName": "busVoltageAlwaysOn",
-                    "returnType": "rev.SignalsConfig",
-                    "tooltip": "Set whether to always enable the status frame that provides the signal\nreturned by SparkBase::getBusVoltage().\n\nStatus frames are only enabled when a signal is requested via its\nrespective getter method, and there may be a small period of time where\nthe signal's data is unavailable due to waiting for the SPARK to receive\nthe command to enable the status frame. Use this method to enable the\nstatus frame at all times.\n\nIf multiple alwaysOn values are set for signals within the same status\nframe, the result from OR'ing the values will be used.\n\n:deprecated: Calling this method will have no effect, as status 0 cannot\n             be disabled.\n\n:param enabled: True to always enable the status frame\n\n:returns: The modified SignalsConfig object for method chaining"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.SignalsConfig"
-                        },
-                        {
-                            "defaultValue": "",
                             "name": "periodMs",
                             "type": "int"
                         }
@@ -13192,7 +13330,7 @@
                     "declaringClassName": "rev.SignalsConfig",
                     "functionName": "busVoltagePeriodMs",
                     "returnType": "rev.SignalsConfig",
-                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby SparkBase::getBusVoltage(). The default period is 10ms.\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n**NOTE:** This signal shares a status frame with applied output\nwhich is used by other SPARK devices in follower mode. Setting too long\nof a period should be avoided if this SPARK device is the leader, as it\ncan degrade follower mode performance.\n\n:param periodMs: The period in milliseconds\n\n:returns: The modified SignalsConfig object for method chaining"
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby SparkBase::GetBusVoltage(). The default period is 10ms.\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n**NOTE:** This signal shares a status frame with applied output\nwhich is used by other SPARK devices in follower mode. Setting too long\nof a period should be avoided if this SPARK device is the leader, as it\ncan degrade follower mode performance.\n\n:param periodMs: The period in milliseconds\n\n:returns: The modified SignalsConfig object for method chaining"
                 },
                 {
                     "args": [
@@ -13396,24 +13534,6 @@
                         },
                         {
                             "defaultValue": "",
-                            "name": "enabled",
-                            "type": "bool"
-                        }
-                    ],
-                    "declaringClassName": "rev.SignalsConfig",
-                    "functionName": "limitsAlwaysOn",
-                    "returnType": "rev.SignalsConfig",
-                    "tooltip": "Set whether to always enable the status frame that provides the signal\nreturned by SparkLimitSwitch::IsPressed().\n\nStatus frames are only enabled when a signal is requested via its\nrespective getter method, and there may be a small period of time where\nthe signal's data is unavailable due to waiting for the SPARK to receive\nthe command to enable the status frame. Use this method to enable the\nstatus frame at all times.\n\nIf multiple alwaysOn values are set for signals within the same status\nframe, the result from OR'ing the values will be used.\n\n:deprecated: Calling this method will have no effect, as status 0 cannot\n             be disabled.\n\n:param enabled: True to always enable the status frame\n\n:returns: The modified SignalsConfig object for method chaining"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.SignalsConfig"
-                        },
-                        {
-                            "defaultValue": "",
                             "name": "periodMs",
                             "type": "int"
                         }
@@ -13439,7 +13559,7 @@
                     "declaringClassName": "rev.SignalsConfig",
                     "functionName": "maxMotionSetpointPositionAlwaysOn",
                     "returnType": "rev.SignalsConfig",
-                    "tooltip": "Set whether to always enable the status frame that provides the signal\nreturned by {@link\ncom.revrobotics.spark.SparkClosedLoopController#getMAXMotionSetpointPosition()\nSparkClosedLoopController.getMAXMotionSetpointPosition()}\n\nStatus frames are only enabled when a signal is requested via its\nrespective getter method, and there may be a small period of time where\nthe signal's data is unavailable due to waiting for the SPARK to receive\nthe command to enable the status frame. Use this method to enable the\nstatus frame at all times.\n\nIf multiple alwaysOn values are set for signals within the same status\nframe, the result from OR'ing the values will be used.\n\n:param enabled: True to always enable the status frame\n\n:returns: The modified :class:`.SignalsConfig` object for method chaining"
+                    "tooltip": "Set whether to always enable the status frame that provides the signal\nreturned by {@link\nSparkClosedLoopController::GetMAXMotionSetpointPosition()}\n\nStatus frames are only enabled when a signal is requested via its\nrespective getter method, and there may be a small period of time where\nthe signal's data is unavailable due to waiting for the SPARK to receive\nthe command to enable the status frame. Use this method to enable the\nstatus frame at all times.\n\nIf multiple alwaysOn values are set for signals within the same status\nframe, the result from OR'ing the values will be used.\n\n:param enabled: True to always enable the status frame\n\n:returns: The modified :class:`.SignalsConfig` object for method chaining"
                 },
                 {
                     "args": [
@@ -13457,7 +13577,7 @@
                     "declaringClassName": "rev.SignalsConfig",
                     "functionName": "maxMotionSetpointPositionPeriodMs",
                     "returnType": "rev.SignalsConfig",
-                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby {@link\ncom.revrobotics.spark.SparkClosedLoopController#getMAXMotionSetpointPosition()\nSparkClosedLoopController.getMAXMotionSetpointPosition()}. The default\nperiod is 100ms.\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param periodMs: The period in milliseconds\n\n:returns: The modified :class:`.SignalsConfig` object for method chaining"
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby {@link SparkClosedLoopController::GetMAXMotionSetpointPosition()}.\nThe default period is 100ms.\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param periodMs: The period in milliseconds\n\n:returns: The modified :class:`.SignalsConfig` object for method chaining"
                 },
                 {
                     "args": [
@@ -13475,7 +13595,7 @@
                     "declaringClassName": "rev.SignalsConfig",
                     "functionName": "maxMotionSetpointVelocityAlwaysOn",
                     "returnType": "rev.SignalsConfig",
-                    "tooltip": "Set whether to always enable the status frame that provides the signal\nreturned by {@link\ncom.revrobotics.spark.SparkClosedLoopController#getMAXMotionSetpointVelocity()\nSparkClosedLoopController.getMAXMotionSetpointVelocity()}\n\nStatus frames are only enabled when a signal is requested via its\nrespective getter method, and there may be a small period of time where\nthe signal's data is unavailable due to waiting for the SPARK to receive\nthe command to enable the status frame. Use this method to enable the\nstatus frame at all times.\n\nIf multiple alwaysOn values are set for signals within the same status\nframe, the result from OR'ing the values will be used.\n\n:param enabled: True to always enable the status frame\n\n:returns: The modified :class:`.SignalsConfig` object for method chaining"
+                    "tooltip": "Set whether to always enable the status frame that provides the signal\nreturned by {@link\nSparkClosedLoopController::GetMAXMotionSetpointVelocity()}\n\nStatus frames are only enabled when a signal is requested via its\nrespective getter method, and there may be a small period of time where\nthe signal's data is unavailable due to waiting for the SPARK to receive\nthe command to enable the status frame. Use this method to enable the\nstatus frame at all times.\n\nIf multiple alwaysOn values are set for signals within the same status\nframe, the result from OR'ing the values will be used.\n\n:param enabled: True to always enable the status frame\n\n:returns: The modified :class:`.SignalsConfig` object for method chaining"
                 },
                 {
                     "args": [
@@ -13493,25 +13613,7 @@
                     "declaringClassName": "rev.SignalsConfig",
                     "functionName": "maxMotionSetpointVelocityPeriodMs",
                     "returnType": "rev.SignalsConfig",
-                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby {@link\ncom.revrobotics.spark.SparkClosedLoopController#getMAXMotionSetpointVelocity()\nSparkClosedLoopController.getMAXMotionSetpointVelocity()}. The default\nperiod is 100ms.\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param periodMs: The period in milliseconds\n\n:returns: The modified :class:`.SignalsConfig` object for method chaining"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.SignalsConfig"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "enabled",
-                            "type": "bool"
-                        }
-                    ],
-                    "declaringClassName": "rev.SignalsConfig",
-                    "functionName": "motorTemperatureAlwaysOn",
-                    "returnType": "rev.SignalsConfig",
-                    "tooltip": "Set whether to always enable the status frame that provides the signal\nreturned by SparkBase::GetMotorTemperature().\n\nStatus frames are only enabled when a signal is requested via its\nrespective getter method, and there may be a small period of time where\nthe signal's data is unavailable due to waiting for the SPARK to receive\nthe command to enable the status frame. Use this method to enable the\nstatus frame at all times.\n\nIf multiple alwaysOn values are set for signals within the same status\nframe, the result from OR'ing the values will be used.\n\n:deprecated: Calling this method will have no effect, as status 0 cannot\n             be disabled.\n\n:param enabled: True to always enable the status frame\n\n:returns: The modified SignalsConfig object for method chaining"
+                    "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby {@link SparkClosedLoopController::GetMAXMotionSetpointVelocity()}\nThe default period is 100ms.\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n:param periodMs: The period in milliseconds\n\n:returns: The modified :class:`.SignalsConfig` object for method chaining"
                 },
                 {
                     "args": [
@@ -13530,24 +13632,6 @@
                     "functionName": "motorTemperaturePeriodMs",
                     "returnType": "rev.SignalsConfig",
                     "tooltip": "Set the period (ms) of the status frame that provides the signal returned\nby SparkBase::GetMotorTemperature(). The default period is 10ms.\n\nIf multiple periods are set for signals within the same status frame,\nthe minimum given value will be used.\n\n**NOTE:** This signal shares a status frame with applied output\nwhich is used by other SPARK devices in follower mode. Setting too long\nof a period should be avoided if this SPARK device is the leader, as it\ncan degrade follower mode performance.\n\n:param periodMs: The period in milliseconds\n\n:returns: The modified SignalsConfig object for method chaining"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.SignalsConfig"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "enabled",
-                            "type": "bool"
-                        }
-                    ],
-                    "declaringClassName": "rev.SignalsConfig",
-                    "functionName": "outputCurrentAlwaysOn",
-                    "returnType": "rev.SignalsConfig",
-                    "tooltip": "Set whether to always enable the status frame that provides the signal\nreturned by SparkBase::GetOutputCurrent().\n\nStatus frames are only enabled when a signal is requested via its\nrespective getter method, and there may be a small period of time where\nthe signal's data is unavailable due to waiting for the SPARK to receive\nthe command to enable the status frame. Use this method to enable the\nstatus frame at all times.\n\nIf multiple alwaysOn values are set for signals within the same status\nframe, the result from OR'ing the values will be used.\n\n:deprecated: Calling this method will have no effect, as status 0 cannot\n             be disabled.\n\n:param enabled: True to always enable the status frame\n\n:returns: The modified SignalsConfig object for method chaining"
                 },
                 {
                     "args": [
@@ -16993,7 +17077,7 @@
                     "declaringClassName": "rev.SparkClosedLoopController",
                     "functionName": "getControlType",
                     "returnType": "rev.SparkLowLevel.ControlType",
-                    "tooltip": "Get the selected control type used when SetReference() was called.\n\n:returns: The selected control type"
+                    "tooltip": "Get the selected control type used when SetSetpoint() was called.\n\n:returns: The selected control type"
                 },
                 {
                     "args": [
@@ -17089,45 +17173,7 @@
                     "declaringClassName": "rev.SparkClosedLoopController",
                     "functionName": "setIAccum",
                     "returnType": "rev.REVLibError",
-                    "tooltip": "Set the I accumulator of the closed loop controller. This is useful when\nwishing to force a reset on the I accumulator of the Closed Loop\nController. You can also preset values to see how it will respond to\ncertain I characteristics\n\nTo use this function, the controller must be in a closed loop control\nmode by calling setReference()\n\n:param iAccum: The value to set the I accumulator to\n\n:returns: REVLibError::kOk if successful"
-                },
-                {
-                    "args": [
-                        {
-                            "defaultValue": "",
-                            "name": "self",
-                            "type": "rev.SparkClosedLoopController"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "setpoint",
-                            "type": "float"
-                        },
-                        {
-                            "defaultValue": "",
-                            "name": "ctrl",
-                            "type": "rev.SparkLowLevel.ControlType"
-                        },
-                        {
-                            "defaultValue": "<ClosedLoopSlot.kSlot0: 0>",
-                            "name": "slot",
-                            "type": "rev.ClosedLoopSlot"
-                        },
-                        {
-                            "defaultValue": "0",
-                            "name": "arbFeedforward",
-                            "type": "float"
-                        },
-                        {
-                            "defaultValue": "<ArbFFUnits.kVoltage: 0>",
-                            "name": "arbFFUnits",
-                            "type": "rev.SparkClosedLoopController.ArbFFUnits"
-                        }
-                    ],
-                    "declaringClassName": "rev.SparkClosedLoopController",
-                    "functionName": "setReference",
-                    "returnType": "rev.REVLibError",
-                    "tooltip": "Set the controller setpoint based on the selected control mode.\n\n:deprecated: Use SetSetpoint instead.\n\n:param setpoint:       The setpoint to set depending on the control mode. For:\n                       - basic duty cycle control this should be a value between -1 and 1\n                       - Voltage Control: Voltage (volts)\n                       - Velocity Control: Velocity (RPM)\n                       - Position Control: Position (Rotations)\n                       - Current Control: Current (Amps).\n                       The units can be changed for position and velocity by a scale\n                       factor using AlternateEncoderConfig::PositionConversionFactor(), or\n                       ExternalEncoderConfig::PositionConversionFactor(), or\n                       EncoderConfig::PositionConversionFactor() or\n                       AlternateEncoderConfig::VelocityConversionFactor(), or\n                       ExternalEncoderConfig::VelocityConversionFactor(), or\n                       EncoderConfig::VelocityConversionFactor().\n:param ctrl:           Is the control type\n:param slot:           The ClosedLoopSlot to use\n:param arbFeedforward: A value from -32.0 to 32.0 which is a voltage\n                       applied to the motor after the result of the specified control mode. The\n                       units for the parameter is Volts. This value is set after the control\n                       mode, but before any current limits or ramp rates.\n:param arbFFUnits:     the units for arbitrary feed-forward\n\n:returns: REVLibError::kOk if successful"
+                    "tooltip": "Set the I accumulator of the closed loop controller. This is useful when\nwishing to force a reset on the I accumulator of the Closed Loop\nController. You can also preset values to see how it will respond to\ncertain I characteristics\n\nTo use this function, the controller must be in a closed loop control\nmode by calling SetSetpoint()\n\n:param iAccum: The value to set the I accumulator to\n\n:returns: REVLibError::kOk if successful"
                 },
                 {
                     "args": [
