@@ -26,7 +26,7 @@ robotpy-native-wpilib==2027.0.0a6
 robotpy-native-wpimath==2027.0.0a6
 robotpy-native-wpinet==2027.0.0a6
 robotpy-native-wpiutil==2027.0.0a6
-robotpy-rev==2027.0.0a3
+robotpy-rev==2027.0.0a4
 robotpy-wpilib-utilities==2027.0.0a2
 robotpy-wpilog==2027.0.0a6.post1
 robotpy-wpimath==2027.0.0a6.post1
