@@ -362,6 +362,7 @@
             "DRIVER_STATION_DISPLAY": "Display",
             "DRIVER_STATION_GAMEPADS": "Gamepads",
             "TEST": "Test",
+            "COLOR": "Color",
             "PAGINATION_TOTAL": "{{start}}-{{end}} of {{total}} items"
         },
         "WARNING":{

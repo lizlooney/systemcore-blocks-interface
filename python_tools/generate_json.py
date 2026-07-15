@@ -15,6 +15,7 @@
 __author__ = "lizlooney@google.com (Liz Looney)"
 
 # Python Standard Library
+import colorsys
 import pathlib
 import sys
 
@@ -56,6 +57,7 @@ def main(argv):
 
   pathlib.Path(f'{FLAGS.output_directory}/generated/').mkdir(parents=True, exist_ok=True)
 
+  """
   robotpy_modules = [
     ntcore,
     rev,
@@ -75,9 +77,18 @@ def main(argv):
     blocks_base_classes,
   ]
   json_generator_runtime_python = json_util.JsonGenerator(
-      runtime_python, [json_generator_robotpy])
+      runtime_python, libs=[json_generator_robotpy])
   file_path = f'{FLAGS.output_directory}/generated/runtime_python.json'
   json_generator_runtime_python.writeJsonFile(file_path)
+  """
+
+  python_standard_library = [
+    colorsys,
+  ]
+  json_generator_python_standard_library = json_util.JsonGenerator(
+      python_standard_library)
+  file_path = f'{FLAGS.output_directory}/generated/python_standard_library.json'
+  json_generator_python_standard_library.writeJsonFile(file_path)
 
 if __name__ == '__main__':
   app.run(main)

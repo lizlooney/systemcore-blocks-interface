@@ -1,0 +1,165 @@
+{
+    "aliases": {},
+    "classes": [],
+    "modules": [
+        {
+            "enums": [],
+            "functions": [
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "h",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "l",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "s",
+                            "type": ""
+                        }
+                    ],
+                    "functionName": "hls_to_rgb",
+                    "returnType": "None",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "h",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "s",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "v",
+                            "type": ""
+                        }
+                    ],
+                    "functionName": "hsv_to_rgb",
+                    "returnType": "None",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "r",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "g",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "b",
+                            "type": ""
+                        }
+                    ],
+                    "functionName": "rgb_to_hls",
+                    "returnType": "None",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "r",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "g",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "b",
+                            "type": ""
+                        }
+                    ],
+                    "functionName": "rgb_to_hsv",
+                    "returnType": "None",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "r",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "g",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "b",
+                            "type": ""
+                        }
+                    ],
+                    "functionName": "rgb_to_yiq",
+                    "returnType": "None",
+                    "tooltip": ""
+                },
+                {
+                    "args": [
+                        {
+                            "defaultValue": "",
+                            "name": "y",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "i",
+                            "type": ""
+                        },
+                        {
+                            "defaultValue": "",
+                            "name": "q",
+                            "type": ""
+                        }
+                    ],
+                    "functionName": "yiq_to_rgb",
+                    "returnType": "None",
+                    "tooltip": ""
+                }
+            ],
+            "moduleName": "colorsys",
+            "moduleVariables": [
+                {
+                    "name": "ONE_SIXTH",
+                    "tooltip": "",
+                    "type": "float",
+                    "writable": false
+                },
+                {
+                    "name": "ONE_THIRD",
+                    "tooltip": "",
+                    "type": "float",
+                    "writable": false
+                },
+                {
+                    "name": "TWO_THIRD",
+                    "tooltip": "",
+                    "type": "float",
+                    "writable": false
+                }
+            ]
+        }
+    ],
+    "subclasses": {}
+}

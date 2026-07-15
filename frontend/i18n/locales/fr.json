@@ -363,6 +363,7 @@
             "DRIVER_STATION_DISPLAY": "Affichage",
             "DRIVER_STATION_GAMEPADS": "Manettes",
             "TEST": "Test",
+            "Color": "Couleur",
             "PAGINATION_TOTAL": "{{start}}-{{end}} sur {{total}} éléments"
         },
         "WARNING": {

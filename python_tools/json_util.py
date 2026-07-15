@@ -199,8 +199,9 @@ class JsonGenerator:
       if value.__module__:
         declaring_module = python_util.getModule(value.__module__)
         if python_util.isBuiltInModule(declaring_module):
-          # Ignore the imported function from a built-in module.
-          continue
+          if declaring_module not in self._root_modules:
+            # Ignore the imported function from a built-in module.
+            continue
         if self._getModuleName(declaring_module) != self._getModuleName(module):
           # Check whether the imported function is exported in __all__.
           if hasattr(module, '__all__') and not (key in module.__all__):
@@ -239,13 +240,13 @@ class JsonGenerator:
         args = []
         for i in range(len(arg_names)):
           arg_type = arg_types[i]
-          if hasattr(module, arg_type) and inspect.isclass(getattr(module, arg_type)):
+          if arg_type is not None and hasattr(module, arg_type) and inspect.isclass(getattr(module, arg_type)):
             # arg_type is a type alias defined in this module.
             # Use the qualified name for the type.
             arg_type = module_name + '.' + arg_type
           args.append(self._createArgData(
               arg_names[i],
-              self._getClassName(arg_type),
+              self._getClassName(arg_type) if arg_type is not None else '',
               arg_default_values[i] if arg_default_values[i] is not None else ''))
         function_data = {}
         function_data[_KEY_FUNCTION_NAME] = function_name
