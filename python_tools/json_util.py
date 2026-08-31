@@ -526,6 +526,22 @@ class JsonGenerator:
 
     class_name = class_data[_KEY_CLASS_NAME]
 
+    for constructor_data in class_data[_KEY_CONSTRUCTORS]:
+      args = constructor_data[_KEY_FUNCTION_ARGS]
+      if (len(args) >= 1 and
+          args[0][_KEY_ARGUMENT_NAME] == 'channel'):
+        print(f'INFO: {class_name} might be a component because it has a constructor that takes channel ({args[0][_KEY_ARGUMENT_TYPE]})')
+      if (len(args) >= 2 and
+          args[0][_KEY_ARGUMENT_NAME] == 'usbId' and
+          args[1][_KEY_ARGUMENT_NAME] == 'channel'):
+        print(f'INFO: {class_name} might be a component because it has a constructor that takes usbId ({args[0][_KEY_ARGUMENT_TYPE]}) and channel ({args[1][_KEY_ARGUMENT_TYPE]})')
+      if (len(args) >= 1 and
+          args[0][_KEY_ARGUMENT_NAME] == 'busId'):
+        print(f'INFO: {class_name} might be a component because it has a constructor that takes busId ({args[0][_KEY_ARGUMENT_TYPE]})')
+      if (len(args) >= 1 and
+          args[0][_KEY_ARGUMENT_NAME] == 'port'):
+        print(f'INFO: {class_name} might be a component because it has a constructor that takes port ({args[0][_KEY_ARGUMENT_TYPE]})')
+
     if class_name == 'wpilib.ExpansionHubMotor':
       class_data[_KEY_IS_COMPONENT] = True
       found_constructor = False
