@@ -797,6 +797,22 @@ class JsonGenerator:
 
     class_name = class_data[_KEY_CLASS_NAME]
 
+    for constructor_data in class_data[_KEY_CONSTRUCTORS]:
+      args = constructor_data[_KEY_FUNCTION_ARGS]
+      len_args = len(args)
+      if len_args >= 2:
+        more_args = ', ...' if len_args > 2 else ''
+        if (args[0][_KEY_ARGUMENT_NAME] == 'usb_id' and
+            args[1][_KEY_ARGUMENT_NAME] == 'channel'):
+          print(f'INFO: {class_name} might be a component because it has a constructor that takes ({args[0][_KEY_ARGUMENT_TYPE]} {args[0][_KEY_ARGUMENT_NAME]}, {args[1][_KEY_ARGUMENT_TYPE]} {args[1][_KEY_ARGUMENT_NAME]}{more_args})')
+      if len_args >= 1:
+        more_args = ', ...' if len_args > 1 else ''
+        if (args[0][_KEY_ARGUMENT_NAME] == 'channel' or
+            args[0][_KEY_ARGUMENT_NAME] == 'bus_id' or
+            args[0][_KEY_ARGUMENT_NAME] == 'port' or
+            args[0][_KEY_ARGUMENT_NAME] == 'can_port'):
+          print(f'INFO: {class_name} might be a component because it has a constructor that takes ({args[0][_KEY_ARGUMENT_TYPE]} {args[0][_KEY_ARGUMENT_NAME]}{more_args})')
+
     if class_name in self._components:
       component = self._components[class_name]
       class_data[_KEY_IS_COMPONENT] = True
