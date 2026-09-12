@@ -48,6 +48,7 @@ import {
     mrcDescendantsMayHaveChanged } from './mrc_mechanism_component_holder';
 import { ClassData, FunctionData, isPortType, upgradePortTypeString } from './utils/python_json_types';
 import { renameMethodCallers } from './mrc_call_python_function'
+import { renameComponentOrMechanism as renameComponentNameInComponentReferenceBlocks } from './mrc_component_reference'
 
 
 export const BLOCK_NAME = 'mrc_component';
@@ -221,6 +222,7 @@ const COMPONENT = {
     if (oldName && oldName !== name && oldName !== legalName) {
       // Rename any callers.
       renameMethodCallers(this.workspace, this.mrcComponentId, legalName);
+      renameComponentNameInComponentReferenceBlocks(this.workspace, this.mrcComponentId, legalName);
       const editor = Editor.getEditorForBlocklyWorkspace(this.workspace);
       if (editor) {
         editor.updateToolboxAfterDelay();
