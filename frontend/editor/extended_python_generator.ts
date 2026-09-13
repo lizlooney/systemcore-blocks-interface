@@ -240,17 +240,14 @@ export class ExtendedPythonGenerator extends PythonGenerator {
           const opModeClassName = opModeDetails.getClassName();
           const opModeModuleName = pascalCaseToSnakeCase(opModeClassName);
           this.importModule(opModeModuleName);
-          // TODO(lizlooney): When RobotPy is changed to use snake case, update the following code.
-          // addOpMode will likely change to add_opmode (or add_op_mode?)
-          // publishOpModes will likely change to publish_opmodes (or publish_op_modes?)
-          const call = `self.addOpMode(${opModeModuleName}.${opModeClassName}, ${robotMode}, '${name}', '${group}', '${description}')`;
+          const call = `self.add_opmode(${opModeModuleName}.${opModeClassName}, ${robotMode}, '${name}', '${group}', '${description}')`;
           if (opModeDetails.getEnabled()) {
             initStatements += this.INDENT + call + '\n';
           } else {
             initStatements += this.INDENT + '# ' + call + '\n';
           }
         }
-        initStatements += this.INDENT + 'self.publishOpModes()\n';
+        initStatements += this.INDENT + 'self.publish_opmodes()\n';
         // TODO: These next two lines should be removed once user_controls are implemented in RobotPy.
         this.fromModuleImportName(MODULE_NAME_WPILIB_BLOCKS, 'DefaultUserControls');
         initStatements += this.INDENT + 'self.user_controls = DefaultUserControls()\n';
