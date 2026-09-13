@@ -12,9 +12,9 @@ def _colorPrefixedLine(color: wpiutil.Color, line: str) -> str:
 
 class DriverStationDisplay:
     @staticmethod
-    def addLine(color: wpiutil.Color, line: str) -> None:
+    def add_line(color: wpiutil.Color, line: str) -> None:
         print(_colorPrefixedLine(color, line))
 
     @staticmethod
-    def addData(caption: str, color: wpiutil.Color, line: str) -> None:
+    def add_data(caption: str, color: wpiutil.Color, line: str) -> None:
         print(f'{caption} : {_colorPrefixedLine(color, line)}')
