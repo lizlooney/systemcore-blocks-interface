@@ -31,7 +31,7 @@ import * as storageModuleContent from './module_content';
 import * as storageNames from './names';
 import * as storageProject from './project';
 import {
-    upgradeTo_0_3_1 as classMethodDefUpgradeTo_0_3_1
+    upgradeTo_0_4_0 as classMethodDefUpgradeTo_0_4_0
     } from '../blocks/mrc_class_method_def';
 import * as workspaces from '../blocks/utils/workspaces';
 
@@ -59,8 +59,15 @@ export async function upgradeProjectIfNecessary(
         anyModuleType, upgradeA301ToCanPort,
         noModuleTypes, noUpgrade);
   }
-  if (semver.lt(projectInfo.version, '0.3.1')) {
-     await upgradeTo_0_3_1(storage, projectName);
+  if (semver.lt(projectInfo.version, '0.4.0')) {
+    // Back to snake_case for python variable, function/method, and argument names.
+    // mrc_class_method_def blocks for mechanism 'opmodeStart' method need to be changed to 'opmode_start'.
+    // mrc_class_method_def blocks for mechanism 'opmodePeriodic' method need to be changed to 'opmode_periodic'.
+    // mrc_class_method_def blocks for mechanism 'opmodeEnd' method need to be changed to 'opmode_end'.
+   await upgradeBlocksFiles(
+      storage, projectName,
+      noModuleTypes, noPreupgrade,
+      isMechanism, classMethodDefUpgradeTo_0_4_0);
   }
 
   projectInfo.version = CURRENT_VERSION;
@@ -396,18 +403,4 @@ function upgradeA301InMechanismBlockJson(blockJson: any): boolean {
     delete blockJson.inputs;
   }
   return true;
-}
-
-// Upgrade from before 0.3.1: snake_case!
-
-async function upgradeTo_0_3_1(
-    storage: commonStorage.Storage,
-    projectName: string): Promise<void> {
-  // mrc_class_method_def blocks for mechanism 'opmodeStart' method need to be changed to 'opmode_start'.
-  // mrc_class_method_def blocks for mechanism 'opmodePeriodic' method need to be changed to 'opmode_periodic'.
-  // mrc_class_method_def blocks for mechanism 'opmodeEnd' method need to be changed to 'opmode_end'.
-  await upgradeBlocksFiles(
-      storage, projectName,
-      noModuleTypes, noPreupgrade,
-      isMechanism, classMethodDefUpgradeTo_0_3_1);
 }

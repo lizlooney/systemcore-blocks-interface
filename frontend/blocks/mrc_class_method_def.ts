@@ -376,7 +376,7 @@ const CLASS_METHOD_DEF = {
     });
     return parameterNames;
   },
-  upgradeTo_0_3_1: function(this: ClassMethodDefBlock) {
+  upgradeTo_0_4_0: function(this: ClassMethodDefBlock) {
     // Change opmodeStart to opmode_start
     // Change opmodePeriodic to opmode_periodic
     // Change opmodeEnd to opmode_end
@@ -615,11 +615,11 @@ export function registerToolboxButton(workspace: Blockly.WorkspaceSvg, messageAp
 }
 
 /**
- * Upgrades the ClassMethodDefBlocks in the given workspace to 0.3.1.
+ * Upgrades the ClassMethodDefBlocks in the given workspace to 0.4.0.
  * This function should only be called when upgrading old projects.
  */
-export function upgradeTo_0_3_1(workspace: Blockly.Workspace): void {
+export function upgradeTo_0_4_0(workspace: Blockly.Workspace): void {
   workspace.getBlocksByType(BLOCK_NAME).forEach(block => {
-    (block as ClassMethodDefBlock).upgradeTo_0_3_1();
+    (block as ClassMethodDefBlock).upgradeTo_0_4_0();
   });
 }
