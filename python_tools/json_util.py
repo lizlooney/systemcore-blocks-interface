@@ -406,16 +406,23 @@ class JsonGenerator:
     for key, value in inspect.getmembers(module, python_util.isNothing):
       if not python_util.isModuleVariableReadable(module, key, value):
         continue
+      writable = python_util.isModuleVariableWritable(module, key, value)
 
-      if any(char.isupper() for char in key):
-        print(f'WARNING: module variable {module_name}.{key} contains an uppercase letter. '
-            'Expected lower_snake_case.',
-             file=sys.stderr)
+      if writable:
+        if any(char.isupper() for char in key):
+          print(f'WARNING: writable module variable {module_name}.{key} contains an uppercase letter. '
+              'Expected lower_snake_case.',
+               file=sys.stderr)
+      else:
+        if any(char.islower() for char in key):
+          print(f'WARNING: constant module variable {module_name}.{key} contains an lowercase letter. '
+              'Expected UPPER_SNAKE_CASE.',
+               file=sys.stderr)
 
       var_data = {}
       var_data[_KEY_VARIABLE_NAME] = key
       var_data[_KEY_VARIABLE_TYPE] = self._getClassName(type(value))
-      var_data[_KEY_VARIABLE_WRITABLE] = python_util.isModuleVariableWritable(module, key, value)
+      var_data[_KEY_VARIABLE_WRITABLE] = writable
       var_data[_KEY_TOOLTIP] = ''
       module_variables.append(var_data)
     module_data[_KEY_MODULE_VARIABLES] = sorted(module_variables, key=lambda var_data: var_data[_KEY_VARIABLE_NAME])
