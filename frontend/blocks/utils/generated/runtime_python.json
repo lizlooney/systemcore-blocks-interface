@@ -49,7 +49,7 @@
                         }
                     ],
                     "declaringClassName": "wpilib_blocks.DriverStationDisplay",
-                    "functionName": "addData",
+                    "functionName": "add_data",
                     "returnType": "None",
                     "tooltip": ""
                 },
@@ -67,7 +67,7 @@
                         }
                     ],
                     "declaringClassName": "wpilib_blocks.DriverStationDisplay",
-                    "functionName": "addLine",
+                    "functionName": "add_line",
                     "returnType": "None",
                     "tooltip": ""
                 }
@@ -220,7 +220,7 @@
                             "type": "wpiutil.Color"
                         }
                     ],
-                    "functionName": "get_ANSI",
+                    "functionName": "get_ansi",
                     "returnType": "str",
                     "tooltip": "Returns the ANSI prefix to use for the given color."
                 },
