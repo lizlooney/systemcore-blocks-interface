@@ -537,10 +537,12 @@ def collectModuleExports(modules: list[types.ModuleType]) -> dict[any, list[str]
   for module in modules:
     if not hasattr(module, '__all__'):
       continue
+    module_name = getFullModuleName(module)
     for key, member in inspect.getmembers(module):
       if not key in module.__all__:
+        if inspect.isclass(member):
+          print(f'HeyLiz - {module_name}.{key} is not in {module_name}.__all__')
         continue
-      module_name = getFullModuleName(module)
       # For each entry we add to module_exports
       # The key is the member being exported.
       # value[0] is the full exported name, starting with the name of the module.
