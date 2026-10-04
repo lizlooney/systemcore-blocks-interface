@@ -286,6 +286,7 @@ class JsonGenerator:
     self._subclasses = python_util.collectSubclasses(self._classes)
     self._exported_class_names = {}
     self._exported_class_module_names = {}
+    self._unusual_class_names = set()
     for o, module_export in module_exports.items():
       if inspect.isclass(o):
         full_class_name = python_util.getFullClassName(o)
@@ -295,6 +296,12 @@ class JsonGenerator:
     for lib in libs:
       self._exported_class_names.update(lib._exported_class_names)
       self._exported_class_module_names.update(lib._exported_class_module_names)
+    #for exported_full_class_name, exported_class_name in self._exported_class_names.items():
+    #  if exported_class_name.startswith('telemetry'):
+    #    print(f'HeyLiz - class {exported_class_name} was {exported_full_class_name}')
+    #for exported_full_class_name, exported_module_name in self._exported_class_module_names.items():
+    #  if exported_module_name.startswith('telemetry'):
+    #    print(f'HeyLiz - module {exported_module_name} was {exported_full_class_name}')
 
   def _getModuleName(self, o) -> str:
     if inspect.ismodule(o):
@@ -328,6 +335,10 @@ class JsonGenerator:
       o = o.replace('typing.SupportsInt', 'int')
       o = o.replace('typing.SupportsFloat | typing.SupportsIndex', 'float')
       o = o.replace('typing.SupportsFloat', 'float')
+      if '._' in o:
+        for part in re.findall(r'[a-zA-Z_][a-zA-Z0-9._]*', o):
+          if '._' in part:
+            self._unusual_class_names.add(part)
       return o
     raise Exception(f'Invalid argument {o}')
 
@@ -860,6 +871,9 @@ class JsonGenerator:
     json_data[_KEY_CLASSES] = self._processClasses()
     json_data[_KEY_ALIASES] = self._processAliases()
     json_data[_KEY_SUBCLASSES] = self._processSubclasses()
+    for class_name in sorted(self._unusual_class_names):
+      print(f'WARNING: {class_name} is an unusual class name. Is it not an exported class?',
+           file=sys.stderr)
     return json_data
 
   def writeJsonFile(self, file_path: str):
