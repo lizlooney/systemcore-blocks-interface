@@ -197,12 +197,6 @@ _DICT_COMPONENTS = {
     component_args=[
       createArgData('smart_io_port', 'SYSTEMCORE_SMART_IO_PORT'),
     ],
-     # TODO: decide which methods are common.
-    common_method_names=[
-      'set_color_order',
-      'set_length',
-      'set_start',
-    ],
   ),
   'wpilib.AnalogEncoder': component.Component('wpilib.AnalogEncoder',
     expected_constructor_arg_names=[
@@ -214,11 +208,6 @@ _DICT_COMPONENTS = {
       createArgData('full_range', '', '1.0'),
       createArgData('expected_zero', '', '0.0'),
     ],
-     # TODO: decide which methods are common.
-    common_method_names=[
-      'get',
-      'set_inverted',
-    ],
   ),
   'wpilib.AnalogPotentiometer': component.Component('wpilib.AnalogPotentiometer',
     expected_constructor_arg_names=[
@@ -229,10 +218,6 @@ _DICT_COMPONENTS = {
       createArgData('full_range', ''),
       createArgData('offset', ''),
     ],
-     # TODO: decide which methods are common.
-    common_method_names=[
-      'get'
-    ],
   ),
   'wpilib.DigitalInput': component.Component('wpilib.DigitalInput',
     expected_constructor_arg_names=[
@@ -240,10 +225,6 @@ _DICT_COMPONENTS = {
     ],
     component_args=[
       createArgData('smart_io_port', 'SYSTEMCORE_SMART_IO_PORT'),
-    ],
-     # TODO: decide which methods are common.
-    common_method_names=[
-      'get',
     ],
   ),
   'wpilib.DutyCycleEncoder': component.Component('wpilib.DutyCycleEncoder',
@@ -256,12 +237,6 @@ _DICT_COMPONENTS = {
       createArgData('full_range', '', '1'),
       createArgData('expected_zero', '', '0'),
     ],
-     # TODO: decide which methods are common.
-    common_method_names=[
-      'get',
-      'is_connected',
-      'set_inverted',
-    ],
   ),
   'wpilib.ExpansionHubMotor': component.Component('wpilib.ExpansionHubMotor',
     expected_constructor_arg_names=[
@@ -269,18 +244,6 @@ _DICT_COMPONENTS = {
     ],
     component_args=[
       createArgData('expansion_hub_motor', 'SYSTEMCORE_USB_PORT__EXPANSION_HUB_MOTOR_PORT'),
-    ],
-     # TODO: decide which methods are common.
-    common_method_names=[
-      'get_encoder_position',
-      'get_encoder_velocity',
-      'is_hub_connected',
-      'reset_encoder',
-      'set_enabled',
-      'set_position_setpoint',
-      'set_reversed',
-      'set_throttle',
-      'set_velocity_setpoint',
     ],
   ),
   'wpilib.ExpansionHubServo': component.Component('wpilib.ExpansionHubServo',
@@ -290,15 +253,6 @@ _DICT_COMPONENTS = {
     component_args=[
       createArgData('expansion_hub_servo', 'SYSTEMCORE_USB_PORT__EXPANSION_HUB_SERVO_PORT'),
     ],
-     # TODO: decide which methods are common.
-    common_method_names=[
-      'is_hub_connected',
-      'set_angle',
-      'set_angle_range',
-      'set_enabled',
-      'set_position',
-      'set_reversed',
-    ],
   ),
   'wpilib.OnboardIMU': component.Component('wpilib.OnboardIMU',
     expected_constructor_arg_names=[
@@ -307,20 +261,6 @@ _DICT_COMPONENTS = {
     component_args=[
       createArgData('mount_orientation', ''),
     ],
-     # TODO: decide which methods are common.
-    common_method_names=[
-      'get_accel_x',
-      'get_accel_y',
-      'get_accel_z',
-      'get_angle_x',
-      'get_angle_y',
-      'get_angle_z',
-      'get_gyro_rate_x',
-      'get_gyro_rate_y',
-      'get_gyro_rate_z',
-      'get_yaw',
-      'reset_yaw',
-    ],
   ),
   'wpilib.PWMSparkMax': component.Component('wpilib.PWMSparkMax',
     expected_constructor_arg_names=[
@@ -328,16 +268,6 @@ _DICT_COMPONENTS = {
     ],
     component_args=[
       createArgData('smart_io_port', 'SYSTEMCORE_SMART_IO_PORT'),
-    ],
-     # TODO: decide which methods are common.
-    common_method_names=[
-      'get_inverted',
-      'get_throttle',
-      'get_voltage',
-      'set_inverted',
-      'set_throttle',
-      'set_voltage',
-      'stop_motor',
     ],
   ),
 }
@@ -984,17 +914,6 @@ class JsonGenerator:
         print('ERROR: failed to find expected constructor with args named '
             f'{component.get_expected_constructor_arg_names()} for {class_name}',
             file=sys.stderr)
-      common_method_names = dict.fromkeys(component.get_common_method_names(), False)
-      for function_data in class_data[_KEY_INSTANCE_METHODS]:
-        method_name = function_data[_KEY_FUNCTION_NAME]
-        if method_name in common_method_names:
-          function_data[_KEY_IS_COMMON] = True
-          # Mark this method as found so we can report ones that weren't found below.
-          common_method_names[method_name] = True
-      for method_name, found in common_method_names.items():
-        if not common_method_names[method_name]:
-          print(f'ERROR: failed to find expected method named {method_name} in {class_name}',
-              file=sys.stderr)
 
   def _processClasses(self):
     class_data_list = []

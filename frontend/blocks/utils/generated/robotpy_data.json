@@ -3041,7 +3041,6 @@
                     ],
                     "declaringClassName": "wpilib.AddressableLED",
                     "functionName": "set_color_order",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Sets the color order for this AddressableLED. The default order is GRB.\n\nThis will take effect on the next call to SetData().\n\n:param order: the color order"
                 },
@@ -3097,7 +3096,6 @@
                     ],
                     "declaringClassName": "wpilib.AddressableLED",
                     "functionName": "set_length",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Sets the length of the LED strip.\n\n:param length: the strip length, in LEDs"
                 },
@@ -3116,7 +3114,6 @@
                     ],
                     "declaringClassName": "wpilib.AddressableLED",
                     "functionName": "set_start",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Sets the display start of the LED strip in the global buffer.\n\n:param start: the strip start, in LEDs"
                 }
@@ -3939,7 +3936,6 @@
                     ],
                     "declaringClassName": "wpilib.AnalogEncoder",
                     "functionName": "set_inverted",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Set if this encoder is inverted.\n\n:param inverted: true to invert the encoder, false otherwise"
                 },
@@ -12055,7 +12051,6 @@
                     ],
                     "declaringClassName": "wpilib.DutyCycleEncoder",
                     "functionName": "get",
-                    "isCommon": true,
                     "returnType": "float",
                     "tooltip": "Get the encoder value.\n\n:returns: the encoder value scaled by the full range input"
                 },
@@ -12095,7 +12090,6 @@
                     ],
                     "declaringClassName": "wpilib.DutyCycleEncoder",
                     "functionName": "is_connected",
-                    "isCommon": true,
                     "returnType": "bool",
                     "tooltip": "Get if the sensor is connected\n\nThis uses the duty cycle frequency to determine if the sensor is connected.\nBy default, a value of 100 Hz is used as the threshold, and this value can\nbe changed with SetConnectedFrequencyThreshold.\n\n:returns: true if the sensor is connected"
                 },
@@ -12173,7 +12167,6 @@
                     ],
                     "declaringClassName": "wpilib.DutyCycleEncoder",
                     "functionName": "set_inverted",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Set if this encoder is inverted.\n\n:param inverted: true to invert the encoder, false otherwise"
                 }
@@ -12948,7 +12941,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubMotor",
                     "functionName": "get_encoder_position",
-                    "isCommon": true,
                     "returnType": "float",
                     "tooltip": "Gets the current position of the motor encoder. Scaled into\ndistancePerCount units.\n\n:returns: Encoder position"
                 },
@@ -12962,7 +12954,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubMotor",
                     "functionName": "get_encoder_velocity",
-                    "isCommon": true,
                     "returnType": "float",
                     "tooltip": "Gets the current velocity of the motor encoder. Scaled into\ndistancePerCount units.\n\n:returns: Encoder velocity"
                 },
@@ -13002,7 +12993,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubMotor",
                     "functionName": "is_hub_connected",
-                    "isCommon": true,
                     "returnType": "bool",
                     "tooltip": "Gets if the underlying ExpansionHub is connected.\n\n:returns: True if hub is connected, otherwise false"
                 },
@@ -13016,7 +13006,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubMotor",
                     "functionName": "reset_encoder",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Reset the encoder count to 0."
                 },
@@ -13053,7 +13042,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubMotor",
                     "functionName": "set_enabled",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Sets if the motor output is enabled or not. Defaults to false.\n\n:param enabled: True to enable, false to disable"
                 },
@@ -13090,7 +13078,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubMotor",
                     "functionName": "set_position_setpoint",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Command the motor to drive to a specific position setpoint. This value will\nbe scaled by SetDistancePerCount and influenced by the PID constants.\n\n:param setpoint: The position setpoint to drive the motor to"
                 },
@@ -13109,7 +13096,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubMotor",
                     "functionName": "set_reversed",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Sets if the motor and encoder should be reversed.\n\n:param reversed: True to reverse encoder, false otherwise"
                 },
@@ -13147,7 +13133,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubMotor",
                     "functionName": "set_velocity_setpoint",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Command the motor to drive to a specific velocity setpoint. This value will\nbe scaled by SetDistancePerCount and influenced by the PID constants.\n\n:param setpoint: The velocity setpoint to drive the motor to"
                 },
@@ -13344,7 +13329,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubServo",
                     "functionName": "is_hub_connected",
-                    "isCommon": true,
                     "returnType": "bool",
                     "tooltip": "Gets if the underlying ExpansionHub is connected.\n\n:returns: True if hub is connected, otherwise false"
                 },
@@ -13387,7 +13371,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubServo",
                     "functionName": "set_angle_range",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Sets the angle range for the SetAngle call.\nBy default, this is 0 to 180 degrees.\n\nMaximum angle must be greater than minimum angle.\n\n:param min_angle: Minimum angle\n:param max_angle: Maximum angle"
                 },
@@ -13406,7 +13389,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubServo",
                     "functionName": "set_enabled",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Sets if the servo output is enabled or not. Defaults to false.\n\n:param enabled: True to enable, false to disable"
                 },
@@ -13503,7 +13485,6 @@
                     ],
                     "declaringClassName": "wpilib.ExpansionHubServo",
                     "functionName": "set_reversed",
-                    "isCommon": true,
                     "returnType": "None",
                     "tooltip": "Sets whether the servo is reversed.\n\nThis will reverse both SetPosition() and SetAngle().\n\n:param reversed: True to reverse, false for normal"
                 }
@@ -27806,7 +27787,6 @@
                     ],
                     "declaringClassName": "wpilib.OnboardIMU",
                     "functionName": "get_accel_x",
-                    "isCommon": true,
                     "returnType": "wpimath.units.meters_per_second_squared",
                     "tooltip": "Get the acceleration along the X axis of the IMU.\n\n:returns: acceleration along the X axis"
                 },
@@ -27820,7 +27800,6 @@
                     ],
                     "declaringClassName": "wpilib.OnboardIMU",
                     "functionName": "get_accel_y",
-                    "isCommon": true,
                     "returnType": "wpimath.units.meters_per_second_squared",
                     "tooltip": "Get the acceleration along the Z axis of the IMU.\n\n:returns: acceleration along the Z axis"
                 },
@@ -27834,7 +27813,6 @@
                     ],
                     "declaringClassName": "wpilib.OnboardIMU",
                     "functionName": "get_accel_z",
-                    "isCommon": true,
                     "returnType": "wpimath.units.meters_per_second_squared",
                     "tooltip": "Get the acceleration along the Z axis of the IMU.\n\n:returns: acceleration along the Z axis"
                 },
@@ -27848,7 +27826,6 @@
                     ],
                     "declaringClassName": "wpilib.OnboardIMU",
                     "functionName": "get_angle_x",
-                    "isCommon": true,
                     "returnType": "wpimath.units.radians",
                     "tooltip": "Get the angle about the X axis of the IMU.\n\n:returns: angle about the X axis"
                 },
@@ -27862,7 +27839,6 @@
                     ],
                     "declaringClassName": "wpilib.OnboardIMU",
                     "functionName": "get_angle_y",
-                    "isCommon": true,
                     "returnType": "wpimath.units.radians",
                     "tooltip": "Get the angle about the Y axis of the IMU.\n\n:returns: angle about the Y axis"
                 },
@@ -27876,7 +27852,6 @@
                     ],
                     "declaringClassName": "wpilib.OnboardIMU",
                     "functionName": "get_angle_z",
-                    "isCommon": true,
                     "returnType": "wpimath.units.radians",
                     "tooltip": "Get the angle about the Z axis of the IMU.\n\n:returns: angle about the Z axis"
                 },
@@ -27890,7 +27865,6 @@
                     ],
                     "declaringClassName": "wpilib.OnboardIMU",
                     "functionName": "get_gyro_rate_x",
-                    "isCommon": true,
                     "returnType": "wpimath.units.radians_per_second",
                     "tooltip": "Get the angular rate about the X axis of the IMU.\n\n:returns: angular rate about the X axis"
                 },
@@ -27904,7 +27878,6 @@
                     ],
                     "declaringClassName": "wpilib.OnboardIMU",
                     "functionName": "get_gyro_rate_y",
-                    "isCommon": true,
                     "returnType": "wpimath.units.radians_per_second",
                     "tooltip": "Get the angular rate about the Y axis of the IMU.\n\n:returns: angular rate about the Y axis"
                 },
@@ -27918,7 +27891,6 @@
                     ],
                     "declaringClassName": "wpilib.OnboardIMU",
                     "functionName": "get_gyro_rate_z",
-                    "isCommon": true,
                     "returnType": "wpimath.units.radians_per_second",
                     "tooltip": "Get the angular rate about the Z axis of the IMU.\n\n:returns: angular rate about the Z axis"
                 },

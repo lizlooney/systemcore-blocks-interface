@@ -12,11 +12,10 @@ _TYPE = 'type'
 _DEFAULT = 'defaultValue'
 
 class Component:
-  def __init__(self, class_name: str, expected_constructor_arg_names: [str], component_args: [], common_method_names: [str]):
+  def __init__(self, class_name: str, expected_constructor_arg_names: [str], component_args: []):
     self._class_name = class_name
     self._expected_constructor_arg_names = expected_constructor_arg_names
     self._component_args = component_args
-    self._common_method_names = common_method_names
 
   def matches_constructor_args(self, actual_args: []) -> bool:
     if len(actual_args) != len(self._expected_constructor_arg_names):
@@ -68,7 +67,3 @@ class Component:
       index_a = index_a - 1
       index_c = index_c - 1
     return component_args
-    
-  def get_common_method_names(self) -> [str]:
-    return self._common_method_names
-    
