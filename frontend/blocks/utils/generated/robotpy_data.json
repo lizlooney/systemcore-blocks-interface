@@ -4171,6 +4171,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -4767,6 +4768,7 @@
                     "tooltip": "The number of edges for the CounterBase to increment or decrement on.\n\nMembers:\n\n  X1\n\n  X2\n\n  X4"
                 }
             ],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -6300,6 +6302,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [],
             "instanceVariables": [],
             "isComponent": false,
@@ -6391,6 +6394,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [],
             "instanceVariables": [],
             "isComponent": false,
@@ -7034,6 +7038,7 @@
                     "tooltip": "Driver Station display mode.\n\nMembers:\n\n  LINE : Display line mode. This is the default display mode.\n\n  RAW_ANSI : Raw ANSI text mode."
                 }
             ],
+            "hide": true,
             "instanceMethods": [],
             "instanceVariables": [],
             "isComponent": false,
@@ -18380,6 +18385,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -21247,6 +21253,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [],
             "instanceVariables": [],
             "isComponent": false,
@@ -22677,6 +22684,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -27729,6 +27737,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -28085,6 +28094,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -28196,6 +28206,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -28533,6 +28544,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -29286,6 +29298,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -29435,6 +29448,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -29729,6 +29743,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [],
             "instanceVariables": [
                 {
@@ -33031,6 +33046,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -33193,6 +33209,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [],
             "instanceVariables": [],
             "isComponent": false,
@@ -33626,6 +33643,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [],
             "instanceVariables": [],
             "isComponent": false,
@@ -42409,6 +42427,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [],
             "instanceVariables": [],
             "isComponent": false,
@@ -42614,6 +42633,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -43226,6 +43246,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -43713,6 +43734,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -43814,6 +43836,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -65631,6 +65654,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -65712,6 +65736,7 @@
                 }
             ],
             "enums": [],
+            "hide": true,
             "instanceMethods": [
                 {
                     "args": [
@@ -109584,6 +109609,7 @@
                     "tooltip": "Mark an OpMode subclass for utility automatic registration.\n\n    Use this decorator bare (``@utility``) or configured\n    (``@utility(name=..., group=...)``). The optional description and colors are\n    published with the Driver Station option.\n    "
                 }
             ],
+            "hide": true,
             "moduleName": "wpilib.opmodes",
             "moduleVariables": []
         },
@@ -109698,6 +109724,7 @@
                 }
             ],
             "functions": [],
+            "hide": true,
             "moduleName": "wpilib.sysid",
             "moduleVariables": []
         },

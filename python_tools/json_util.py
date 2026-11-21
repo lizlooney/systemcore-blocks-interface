@@ -31,6 +31,8 @@ _LIST_MODULE_NAME_PREFIXES_TO_IGNORE = [
 _LIST_MODULE_NAMES_TO_HIDE = [
   'telemetry',
   'tunables',
+  'wpilib.opmodes',
+  'wpilib.sysid',
 ]
 
 _LIST_CLASS_NAMES_TO_HIDE = [
@@ -58,6 +60,30 @@ _LIST_CLASS_NAMES_TO_HIDE = [
   'wpilib.DataLogTelemetryBackend',
   'wpilib.NetworkTablesTelemetryBackend',
   'wpilib.NetworkTablesTunableBackend',
+  # Robots
+  'wpilib.IterativeRobotBase',
+  'wpilib.OpModeRobot',
+  'wpilib.OpModeRobotBase',
+  'wpilib.RobotBase',
+  'wpilib.TimedRobot',
+  'wpilib.TimesliceRobot',
+  # Miscellaneous
+  'wpilib.BooleanEvent',
+  'wpilib.CounterBase',
+  'wpilib.DriverStation',
+  'wpilib.DriverStationBackend',
+  'wpilib.DriverStationDisplay',
+  'wpilib.MatchState',
+  'wpilib.NetworkBooleanEvent',
+  'wpilib.Notifier',
+  'wpilib.OpMode',
+  'wpilib.PeriodicOpMode',
+  'wpilib.PeriodicPriorityQueue',
+  'wpilib.RobotController',
+  'wpilib.RobotState',
+  'wpilib.SystemServer',
+  'wpilib.Tracer',
+  'wpilib.Watchdog',
 ]
 
 _LIST_IGNORED_SUPER_CLASSES = [
