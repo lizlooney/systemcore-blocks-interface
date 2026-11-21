@@ -18,6 +18,7 @@ import component
 
 import telemetry
 import tunables
+import wpilib
 
 _PRINT_IGNORING = False
 
@@ -58,6 +59,11 @@ _LIST_CLASS_NAMES_TO_HIDE = [
   'wpilib.DataLogTelemetryBackend',
   'wpilib.NetworkTablesTelemetryBackend',
   'wpilib.NetworkTablesTunableBackend',
+]
+
+_LIST_CLASSES_TO_IGNORE = [
+  wpilib.CAN,
+  wpilib._wpilib.CAN,
 ]
 
 _LIST_IGNORED_SUPER_CLASSES = [
@@ -142,6 +148,8 @@ def ignoreModule(module_name: str) -> bool:
   return False
 
 def ignoreClass(cls: type) -> bool:
+  if cls in _LIST_CLASSES_TO_IGNORE:
+    return True
   if cls in _LIST_IGNORED_SUPER_CLASSES:
     return True
   return False
