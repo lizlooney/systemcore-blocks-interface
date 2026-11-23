@@ -887,16 +887,23 @@ class JsonGenerator:
         enum_data[_KEY_TOOLTIP] = ''
       enums.append(enum_data)
     class_data[_KEY_ENUMS] = sorted(enums, key=lambda enum_data: enum_data[_KEY_ENUM_CLASS_NAME])
-    self._processComponent(class_data)
+    self._processComponent(cls, class_data)
     return class_data
 
-  def _processComponent(self, class_data):
+  def _processComponent(self, cls, class_data):
     """Determine whether the given class_data represents a component and, if so,
     set the isComponent field and add componentArgs to the constructor that
     blocks will use."""
     # TODO(lizlooney): Replace _DICT_COMPONENTS and the following temporary fake
     # code with code that looks at doc string and/or parameter type aliases to
     # tell whether this is a component and what the args are.
+
+    for base_class in cls.__bases__:
+      base_class_name = self._getClassName(base_class)
+      if base_class_name == 'wpilib.HIDDevice':
+        return
+      if base_class_name == 'wpilib.simulation.GenericHIDSim':
+        return
 
     class_name = class_data[_KEY_CLASS_NAME]
 
